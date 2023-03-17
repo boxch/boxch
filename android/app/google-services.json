@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "323388584315",
+    "project_id": "boxch-31c17",
+    "storage_bucket": "boxch-31c17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323388584315:android:df2bbe191345040695cdde",
+        "android_client_info": {
+          "package_name": "com.arj.boxch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323388584315-p6miheablm37h644n3ge04lj6i64p85a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp-uYJr1Dyq3pXAaWYfeCawgBlH7QfhCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323388584315-p6miheablm37h644n3ge04lj6i64p85a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
