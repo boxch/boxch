@@ -14,7 +14,7 @@ dependencies:
   qr_flutter: ^4.0.0
   http: ^0.13.4
   mobile_scanner: ^2.0.0
-  solana: ^0.28.1
+  solana: ^0.29.0
   url_launcher: ^6.1.2
   hex: ^0.2.0
   countup: ^0.1.4
@@ -34,6 +34,7 @@ dependencies:
   slide_to_act: ^2.0.1
   shimmer_animation: ^2.1.0
   favicon: ^1.1.1
+  walletconnect_flutter_v2: ^1.2.0
   # solana_wallet_adapter: ^0.0.4+1
 
 

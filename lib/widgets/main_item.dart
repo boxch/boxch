@@ -38,12 +38,10 @@ class _MainMenuState extends State<MainMenu> {
         decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(25.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0)
-            ]),
+            border: Border.all(
+              color: Colors.black,
+              width: 0.5
+            )),
         padding: EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

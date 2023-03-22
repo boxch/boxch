@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MenuItem extends StatefulWidget {
   final String text;
   final Function() onTap;
-  final IconData icon;
+  final icon;
   final double? iconSize;
   MenuItem(
       {Key? key, required this.onTap, required this.text, required this.icon, this.iconSize})
@@ -36,8 +36,9 @@ class _MenuItemState extends State<MenuItem> {
         height: 80.0,
         width: 80.0,
         decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(25.0),
+            border: Border.all(
+            color: Theme.of(context).hintColor.withOpacity(0.3), width: 1.0),
             boxShadow: [
               BoxShadow(
                   color: Colors.black.withOpacity(0.01),
@@ -50,9 +51,9 @@ class _MenuItemState extends State<MenuItem> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 4.0),
-            Icon(widget.icon, size: widget.iconSize ?? null, color: Theme.of(context).hintColor),
+            widget.icon,
             Text(widget.text,
-                style: TextStyle(color: Theme.of(context).hintColor, fontSize: 11.0))
+                style: TextStyle(color: Theme.of(context).hintColor, fontSize: 9.0))
           ],
         ),
       ),

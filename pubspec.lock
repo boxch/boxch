@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.16"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -57,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  base_x:
+    dependency: transitive
+    description:
+      name: base_x
+      sha256: "3f1043679659f1759c651f900da6f24f0a8062c28daa6f9625e8d580002e187b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   bip39:
     dependency: transitive
     description:
@@ -89,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1+3"
+  bs58:
+    dependency: transitive
+    description:
+      name: bs58
+      sha256: "3ed24dadf386ca749ff50af678be1131ef569a3583a6f37b87b90c032270c767"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   build:
     dependency: transitive
     description:
@@ -313,6 +337,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   ed25519_hd_key:
     dependency: transitive
     description:
@@ -321,6 +353,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  event:
+    dependency: transitive
+    description:
+      name: event
+      sha256: eb4814de94cbf6a10da9c4f652bc654087d7066e33566b5036822e6c0b24befb
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   fake_async:
     dependency: transitive
     description:
@@ -621,6 +661,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.0"
+  json_rpc_2:
+    dependency: transitive
+    description:
+      name: json_rpc_2
+      sha256: "5e469bffa23899edacb7b22787780068d650b106a21c76db3c49218ab7ca447e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   logging:
     dependency: transitive
     description:
@@ -942,10 +990,10 @@ packages:
     dependency: "direct main"
     description:
       name: solana
-      sha256: "0d8b7259369c40a0bca083f7c812ef3888932ea5b171346ebe063b817b79280d"
+      sha256: "85331b87b17fa32fdf85f33fa7a1bca23a6cf302a8d3d6222d6ec36d0dec692f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.28.1"
+    version: "0.29.0"
   source_gen:
     dependency: transitive
     description:
@@ -1114,6 +1162,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  walletconnect_flutter_v2:
+    dependency: "direct main"
+    description:
+      name: walletconnect_flutter_v2
+      sha256: "5c604f661bb52d436c4ec52f236bad6b3bd4559fd8a7bfffde45a7d5735673d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   watcher:
     dependency: transitive
     description:
@@ -1170,6 +1226,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  x25519:
+    dependency: transitive
+    description:
+      name: x25519
+      sha256: cec3c125f0d934dccba6c4cab48f3fbf866dc78895dcc5a1584d35b0a845005b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   xdg_directories:
     dependency: transitive
     description:

@@ -95,12 +95,12 @@ class CreateWalletScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0)),
-                                    Icon(Iconsax.arrow_right_1, size: 21.0),
+                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0, color: Colors.black)),
+                                    Icon(Iconsax.arrow_right_1, size: 21.0, color: Colors.black),
                                 ],),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color:  Theme.of(context).hintColor.withOpacity(0.2)
+                                  color:  Theme.of(context).colorScheme.onPrimary
                                   
                                 ),
                               ),

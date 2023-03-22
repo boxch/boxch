@@ -5,19 +5,22 @@ import 'package:boxch/main/screens/all_contacts_screen.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/history_transactions_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
-import 'package:boxch/screens/other_screens/webview_screen.dart';
+import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
+import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
+import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
 import 'package:boxch/widgets/main_item.dart';
 import 'package:boxch/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:boxch/controllers/history/history_cubit.dart';
+import 'package:boxch/history/history_cubit.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/functions.dart';
 import 'package:boxch/utils/show_toasts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxch/widgets/token_list_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
@@ -188,7 +191,7 @@ class MainScreen extends StatelessWidget {
                             MainMenu(
                               icon: Iconsax.card,
                               onTap: () => tradingMethods(context),
-                              text: "Buy&Sell",
+                              text: "Buy",
                             ),
                             SizedBox(width: 16.0),
                             MainMenu(
@@ -232,10 +235,10 @@ class MainScreen extends StatelessWidget {
                                   context,
                                   AllContactsScreen(
                                       tokenList: state.tokens,
-                                      contacts: List.from(Hive.box(mainBox)
-                                              .get(boxContactsKey) ?? [])
+                                      contacts: Hive.box(mainBox).get(boxContactsKey) != null ? Hive.box(mainBox)
+                                              .get(boxContactsKey)
                                               .reversed
-                                              .toList())),
+                                              .toList() : [])),
                               child: Text('viewAll'.tr,
                                   style:
                                       TextStyle(color: Theme.of(context).hintColor)),
@@ -497,41 +500,29 @@ class MainScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                SizedBox(height: 8.0),
+                SizedBox(height: 16.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 32.0),
                   height: 30.0,
                   alignment: Alignment.centerLeft,
-                  child: Text("Trading methods",
+                  child: Text("Buy crypto",
                       style: TextStyle(
                           fontSize: 16.0, color: Theme.of(context).hintColor)),
                 ),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Divider()),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      ListTile(
-                        onTap: () => replaceWindow(context,
-                            WebviewScreen(urlLink: "https://app.payer.pw")),
-                        title: Text("P2P trading"),
-                        subtitle: Text("Fee: 0.99%. No KYC",
-                            style: TextStyle(fontSize: 11.0)),
-                        leading: Image.asset("assets/images/payer.png",
-                            height: 40.0, width: 40.0),
-                      ),
                       ListTile(
                         onTap: () => replaceWindow(
                             context,
                             WebviewScreen(
                                 urlLink:
-                                    "https://buy.onramper.com/?API_KEY=pk_prod_puiFMHyFkJpStdWO1jV2HtmhMk37Esi4oeBmB0BxNAY0?defaultCrypto=SOL")),
+                                    "https://buy.onramper.com/?wallets=SOL:${wallet.address}&API_KEY=pk_prod_puiFMHyFkJpStdWO1jV2HtmhMk37Esi4oeBmB0BxNAY0&defaultCrypto=SOL")),
                         title: Text("OnRamper"),
                         subtitle:
-                            Text("Fee: >3%", style: TextStyle(fontSize: 11.0)),
+                            Text("Creadit/Debit card", style: TextStyle(fontSize: 11.0)),
                         leading: Image.asset("assets/images/onramper.png",
                             height: 40.0, width: 40.0),
                       ),
@@ -565,39 +556,29 @@ class MainScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                SizedBox(height: 8.0),
+                SizedBox(height: 16.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 32.0),
-                  height: 30.0,
                   alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Menu",
+                  child: Text("Menu",
                           style: TextStyle(
                               fontSize: 16.0, color: Theme.of(context).hintColor)),
-                      InkWell(
-                        onTap: () => replaceWindow(context, SettingsScreen()),
-                        child: SizedBox(
-                          height: 25.0,
-                          width: 25.0,
-                          child: Icon(Iconsax.setting, color: Theme.of(context).hintColor.withOpacity(0.5))),
-                      )
-                    ],
-                  ),
                 ),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Divider()),
-                SizedBox(height: 8.0),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     // MenuItem(onTap: () {}, text: "Kassa", icon: Iconsax.shopping_bag)
+                      MenuItem(onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
+                        create: (context) => WalletConnectCubit(),
+                        child: WalletConnectScreen(),
+                      )), 
+                      text: "Connect", icon: Image.asset("assets/images/wallet_connect.png", height: 35.0, width: 35.0)),
+                      SizedBox(width: 16.0),
+                      MenuItem(onTap: () => replaceWindow(context, SettingsScreen()), text: "settingsText".tr,
+                       icon: Image.asset("assets/images/settings.png", height: 35.0, width: 35.0))
                     ],
                   ),
                 )),

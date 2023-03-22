@@ -32,10 +32,10 @@ class _CheckBoxWalletState extends State<CheckBoxWallet> {
           alignment: Alignment.center,
           child: Icon(Icons.check_rounded, size: 12.0),
           decoration: BoxDecoration(
-            color: Colors.green,
+            color: Colors.blueAccent,
             borderRadius: BorderRadius.circular(5.0),
             border: Border.all(
-              color: Colors.green
+              color: Colors.blue
             )
           ),
         ) : Container(

@@ -30,12 +30,11 @@ class ChangePasswordScreen extends StatelessWidget {
           Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
-                            style: TextStyle(fontWeight: FontWeight.bold),
                             controller: _controllerOldPassword,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
                             decoration: InputDecoration(
-                                hintText: 'Input old password',
+                                hintText: 'Enter old password',
                                 filled: true,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -47,12 +46,11 @@ class ChangePasswordScreen extends StatelessWidget {
       Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
-                            style: TextStyle(fontWeight: FontWeight.bold),
                             controller: _controllerNewPassword,
                             keyboardType: TextInputType.number,
                             maxLength: 6,
                             decoration: InputDecoration(
-                                hintText: 'Input new password',
+                                hintText: 'Enter new password',
                                 filled: true,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -76,10 +74,10 @@ class ChangePasswordScreen extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
-                        child: Text("Change", style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text("Change"),
                         height: 50.0,
                         width: MediaQuery.of(context).size.width,
                       ),

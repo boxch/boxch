@@ -1,13 +1,10 @@
-import 'package:boxch/main/screens/settings_screens/language_screen.dart';
 import 'package:boxch/start/cubit/start_cubit.dart';
-import 'package:boxch/utils/functions.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:boxch/utils/show_toasts.dart';
 import 'package:boxch/widgets/checkbox_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StartScreen extends StatelessWidget {
@@ -24,9 +21,6 @@ class StartScreen extends StatelessWidget {
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 title: Text("Boxch Wallet", style: TextStyle(color: Theme.of(context).hintColor)),
                 centerTitle: false,
-                actions: [
-                  IconButton(onPressed: () => replaceWindow(context, LanguageScreen()), icon: Icon(Iconsax.language_square, color: Theme.of(context).hintColor)),
-                ],
               ),
               body: Stack(
                 alignment: Alignment.center,
@@ -61,7 +55,7 @@ class StartScreen extends StatelessWidget {
                                   onTap: () => launchUrl(Uri.parse(termsOfCond)),
                                   child: Text(
                                     'Terms of conditions',
-                                    style: TextStyle(fontSize: 12.0, color: Colors.greenAccent),
+                                    style: TextStyle(fontSize: 12.0, color: Colors.amber),
                                   ),
                                 ),
                               ],
@@ -110,7 +104,7 @@ class StartScreen extends StatelessWidget {
                                 child: Text('importWalletButtonText'.tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Theme.of(context).cardColor,
+                                  color: Theme.of(context).cardColor
                                 ),
                               ),
                           ),

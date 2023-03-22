@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/screens/qr_screen.dart';
+import 'package:boxch/main/screens/transaction_status.dart';
 import 'package:boxch/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:solana/dto.dart';
 
 // ignore: must_be_immutable
 class SendScreen extends StatefulWidget {
@@ -273,15 +275,13 @@ class _SendScreenState extends State<SendScreen> {
                     innerColor: Theme.of(context).primaryColor,
                     outerColor: Colors.grey.withOpacity(0.2),
                     child: Text("swipeToSendText".tr, style: TextStyle(color: Theme.of(context).hintColor)),
-                    animationDuration: Duration.zero,
-                    submittedIcon: setStateSubmit(tx: tx),
+                    submittedIcon: Icon(Iconsax.more, color: Theme.of(context).hintColor),
                     onSubmit: () async {
                       if (valueNumber != null) {
                           tx = await _cubit.sendTokenTransaction(address: widget.quick != null ? widget.quick!['address'] : SendScreen.destinationWallet.text,
                           amount: double.parse(valueNumber), mintAddress: widget.address, symbol: widget.symbol);
-                          setState(() {});
+                          replaceWindow(context, TransactionStatusScreen());
                         }
-                        
                     },
                   ),
                 ),

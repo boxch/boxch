@@ -19,7 +19,7 @@ class SolanaNetwork {
     symbol: "SOL", 
     address: SOL, 
     decimals: 9, 
-    balance: (solBalance / pow(10, 9)).toString(),
+    balance: (solBalance.value / pow(10, 9)).toString(),
     image: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png"));
 
     for (var element in tokenAccountsByOwner) { 

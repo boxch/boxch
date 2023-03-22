@@ -1,6 +1,6 @@
-import 'package:boxch/controllers/history/history_cubit.dart';
-import 'package:boxch/controllers/history/history_states.dart';
-import 'package:boxch/screens/other_screens/webview_screen.dart';
+import 'package:boxch/history/history_cubit.dart';
+import 'package:boxch/history/history_states.dart';
+import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/functions.dart';
 import 'package:flutter/material.dart';

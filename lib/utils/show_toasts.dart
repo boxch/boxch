@@ -65,6 +65,12 @@ okCopyToast(BuildContext context, {String? message}) {
         width: 70.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.01),
+                  blurRadius: 10.0,
+                  spreadRadius: 5.0)
+            ],
             color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(10.0)),
         child: Column(

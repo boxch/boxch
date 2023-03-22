@@ -59,7 +59,7 @@ class _AllContactsScreenState extends State<AllContactsScreen> {
         ),
         body: Column(
           children: [
-            GridView.count(
+           widget.contacts.isNotEmpty ? GridView.count(
                 crossAxisCount: 2,
                 children: List.generate(widget.contacts.length, (index) {
                   return InkWell(
@@ -124,7 +124,7 @@ class _AllContactsScreenState extends State<AllContactsScreen> {
                     ),
                   );
                 }),
-                ),
+                ) : SizedBox(),
               Container(height: 60.0, width: MediaQuery.of(context).size.width, color: Colors.amber)
           ],
         ),

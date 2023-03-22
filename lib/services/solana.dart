@@ -18,7 +18,7 @@ class SolanaApi {
   Future getTokenBalance({required String mintAddress}) async {
     try {
       var balance = await mainnetSolanaClient.rpcClient.getTokenAccountBalance(mintAddress, commitment: Commitment.processed);
-      return double.parse(balance.uiAmountString.toString());
+      return double.parse(balance.value.uiAmountString.toString());
     } catch (e) {
       return 0;
     }
@@ -90,7 +90,7 @@ class SolanaApi {
 
 
   Future getTokenAccountsByOwner() async {
-    final List<ProgramAccount> tokenAccountsByOwner = await mainnetSolanaClient.rpcClient.getTokenAccountsByOwner(wallet.address, TokenAccountsFilter.byProgramId(TokenProgram.programId), encoding: Encoding.jsonParsed, commitment: Commitment.processed);
+    final tokenAccountsByOwner = await mainnetSolanaClient.rpcClient.getTokenAccountsByOwner(wallet.address, TokenAccountsFilter.byProgramId(TokenProgram.programId), encoding: Encoding.jsonParsed, commitment: Commitment.processed);
     return tokenAccountsByOwner;
   }
 

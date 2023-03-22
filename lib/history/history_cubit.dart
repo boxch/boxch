@@ -1,4 +1,4 @@
-import 'package:boxch/controllers/history/history_states.dart';
+import 'package:boxch/history/history_states.dart';
 import 'package:boxch/services/repository.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';

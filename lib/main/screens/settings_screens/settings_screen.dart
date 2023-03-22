@@ -3,12 +3,12 @@ import 'package:boxch/main/screens/settings_screens/change_password_screen.dart'
 import 'package:boxch/main/screens/settings_screens/info_screen.dart';
 import 'package:boxch/main/screens/settings_screens/language_screen.dart';
 import 'package:boxch/models/wallet.dart';
-import 'package:boxch/screens/other_screens/webview_screen.dart';
+import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/app_info.dart';
 import 'package:boxch/utils/functions.dart';
-import 'package:boxch/controllers/theme/theme_cubit.dart';
-import 'package:boxch/controllers/theme/theme_icons.dart';
-import 'package:boxch/controllers/theme/theme_states.dart';
+import 'package:boxch/theme/theme_cubit.dart';
+import 'package:boxch/theme/theme_icons.dart';
+import 'package:boxch/theme/theme_states.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +110,7 @@ class SettingsScreen extends StatelessWidget {
                       fontSize: 12.0, color: Theme.of(context).hintColor)),
             ),
             ListTile(
-              leading: Icon(Iconsax.security,
+              leading: Icon(Iconsax.key,
                   color: Theme.of(context).colorScheme.secondary, size: 21.0),
               title:
                   Text('privateKeyText'.tr, style: TextStyle(fontSize: 14.0)),
@@ -161,7 +161,7 @@ class SettingsScreen extends StatelessWidget {
               title: Text('needHelpText'.tr, style: TextStyle(fontSize: 14.0)),
               trailing: Icon(Icons.navigate_next_outlined),
               onTap: () =>
-                  replaceWindow(context, WebviewScreen(urlLink: supportBot)),
+                  replaceWindow(context, WebviewScreen(urlLink: telegramChat)),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -184,8 +184,9 @@ class SettingsScreen extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Theme.of(context).primaryColor,
+                    border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.5), width: 0.5)
                   ),
                   child: Text("exitText".tr,
                       style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).hintColor)),
@@ -197,7 +198,7 @@ class SettingsScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(appName, style: TextStyle(fontSize: 16.0)),
+                Text(appName, style: TextStyle(fontSize: 16.0, color: Theme.of(context).hintColor)),
                 Text(appVersion,
                     style: TextStyle(
                         fontSize: 12.0, color: Theme.of(context).hintColor)),

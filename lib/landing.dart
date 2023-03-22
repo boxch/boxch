@@ -1,9 +1,9 @@
 import 'package:boxch/auth/cubit/auth_cubit.dart';
 import 'package:boxch/auth/screens/enter_password_screen.dart';
 import 'package:boxch/auth/screens/password_screen.dart';
-import 'package:boxch/controllers/theme/theme_cubit.dart';
-import 'package:boxch/controllers/theme/theme_states.dart';
-import 'package:boxch/controllers/theme/themes.dart';
+import 'package:boxch/theme/theme_cubit.dart';
+import 'package:boxch/theme/theme_states.dart';
+import 'package:boxch/theme/themes.dart';
 import 'package:boxch/start/cubit/start_cubit.dart';
 import 'package:boxch/start/cubit/start_states.dart';
 import 'package:boxch/start/screens/create_wallet_screen.dart';
