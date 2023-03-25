@@ -26,7 +26,7 @@ class PasswordScreen extends StatelessWidget {
 
         if (state is ValidPasswordState) {
           return BlocProvider<MainCubit>(
-            create: (context) => MainCubit(state),
+            create: (context) => MainCubit(context),
             child: MainScreen());
         }
 

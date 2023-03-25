@@ -85,7 +85,7 @@ class CreateWalletScreen extends StatelessWidget {
                               child: InkWell(
                             onTap: () async {
                                 await _cubit.signInCreateWallet(
-                                      seed: mnemonic);
+                                      mnemonic: mnemonic);
                               },
                             child: Container(
                                 height: 50.0,

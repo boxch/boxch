@@ -67,10 +67,10 @@ class HistoryTransactionsScreen extends StatelessWidget {
               TextButton(
                 onPressed: () async {
                   if (type == 0) {
-                    cubit.closeTokenAccount(context, tokenAddress: mint);
+                    //cubit.closeTokenAccount(context, tokenAddress: mint);
                     Navigator.of(context).pop();
                   } else if (type == 1) {
-                    cubit.burnAndCloseTokenAccount(context, tokenAddress: mint, amount: double.parse(amount));
+                    //cubit.burnAndCloseTokenAccount(context, tokenAddress: mint, amount: double.parse(amount));
                     Navigator.of(context).pop();
                   }
                   
@@ -161,7 +161,7 @@ class HistoryTransactionsScreen extends StatelessWidget {
                 child: ListTile(
                   title: Text(state.dataHistoryTransactions[index].txHash,
                   style: TextStyle(fontSize: 11.0)),
-                  leading: state.dataHistoryTransactions[index].status == StatusType.success ? Icon(Icons.check_circle_outline_rounded, color: Colors.greenAccent) : Icon(Icons.error_outline_outlined, color: Colors.red),
+                  //leading: state.dataHistoryTransactions[index].status == StatusType.success ? Icon(Icons.check_circle_outline_rounded, color: Colors.greenAccent) : Icon(Icons.error_outline_outlined, color: Colors.red),
                 ),
               );
             }) : Center(child: Text("empty", style: TextStyle(color: Theme.of(context).hintColor)));

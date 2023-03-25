@@ -20,7 +20,6 @@ import 'package:boxch/utils/show_toasts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxch/widgets/token_list_tile.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
@@ -208,6 +207,7 @@ class MainScreen extends StatelessWidget {
               ];
             },
             body: RefreshIndicator(
+              displacement: 5.0,
               color: Colors.grey,
               backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
               onRefresh: () async => await cubit.refreshMain(),
@@ -572,7 +572,7 @@ class MainScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MenuItem(onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
-                        create: (context) => WalletConnectCubit(),
+                        create: (context) => WalletConnectCubit(context),
                         child: WalletConnectScreen(),
                       )), 
                       text: "Connect", icon: Image.asset("assets/images/wallet_connect.png", height: 35.0, width: 35.0)),

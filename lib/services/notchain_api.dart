@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class NoChainApi {
+class NotChainApi {
 
   Future<double> getTokenPrice({required String symbol}) async {
     var url = Uri.parse("https://price.jup.ag/v1/price?id=$symbol");

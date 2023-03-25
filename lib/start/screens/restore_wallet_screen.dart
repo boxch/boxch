@@ -77,7 +77,7 @@ class RestoreWalletScreen extends StatelessWidget {
                               child: InkWell(
                             onTap: () async {
                                 await _cubit.signInCreateWallet(
-                                      seed: controllerRestoreWallet.text);
+                                      mnemonic: controllerRestoreWallet.text);
                               },
                             child: Container(
                                 height: 50.0,

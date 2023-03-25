@@ -73,6 +73,18 @@ class SettingsScreen extends StatelessWidget {
         ),
         elevation: 0.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(onPressed: () => _cubit.changeTheme(), 
+            icon: BlocBuilder<ThemeCubit, ThemeState>(
+                    builder: (context, state) {
+                  return state.icon
+                      ? appicon[AppIcon.ligthIcon]!
+                      : appicon[AppIcon.darkIcon]!;
+                })),
+          )
+        ],
       ),
       body: Container(
         child: ListView(
@@ -84,16 +96,6 @@ class SettingsScreen extends StatelessWidget {
               child: Text("GENERAL",
                   style: TextStyle(
                       fontSize: 12.0, color: Theme.of(context).hintColor)),
-            ),
-            ListTile(
-              onTap: () => _cubit.changeTheme(),
-              title: Text('changeTheme'.tr, style: TextStyle(fontSize: 14.0)),
-              leading: BlocBuilder<ThemeCubit, ThemeState>(
-                  builder: (context, state) {
-                return state.icon
-                    ? appicon[AppIcon.ligthIcon]!
-                    : appicon[AppIcon.darkIcon]!;
-              }),
             ),
             ListTile(
               onTap: () => replaceWindow(context, LanguageScreen()),

@@ -27,7 +27,7 @@ class InfoScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text("seedPhraseText".tr, style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold))),
+          child: Text("Private key".tr, style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold))),
           Expanded(
             child: Container(
               alignment: Alignment.center,

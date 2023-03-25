@@ -1,3 +1,4 @@
+import 'package:boxch/utils/functions.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_states.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
@@ -14,8 +15,9 @@ class WalletConnectScreen extends StatelessWidget {
     final WalletConnectCubit _walletConnectCubit =
         context.read<WalletConnectCubit>();
     return BlocBuilder<WalletConnectCubit, WalletConnectStates>(
-        builder: (context, builderState) {
-      if (builderState is WalletConnectScreenState) {
+        builder: (context, state) {
+
+      if (state is WalletConnectScreenState) {
         return Scaffold(
           appBar: AppBar(
             elevation: 0.0,
@@ -55,7 +57,7 @@ class WalletConnectScreen extends StatelessWidget {
                   Expanded(
                       child: ListView.builder(
                           physics: BouncingScrollPhysics(),
-                          itemCount: builderState.session.length,
+                          itemCount: state.session.length,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
@@ -71,17 +73,16 @@ class WalletConnectScreen extends StatelessWidget {
                                 alignment: Alignment.center,
                                 child: ListTile(
                                   leading: Icon(Icons.monitor),
-                                  title: Text(builderState.session[index]!
-                                      .session.peer.metadata.name),
+                                  title: Text(state.session[index]!.peer.metadata.name),
+                                  subtitle: Text(state.session[index]!.peer.metadata.url),
                                   trailing: TextButton(
                                     style: ButtonStyle(),
                                     child: Text("Disconnect",
                                         style: TextStyle(color: Colors.red)),
                                     onPressed: () =>
                                         _walletConnectCubit.disconnect(
-                                            index: index,
-                                            sessionData: builderState
-                                                .session[index]!.session),
+                                            sessionData: state
+                                                .session[index]!),
                                   ),
                                 ),
                               ),
@@ -97,7 +98,7 @@ class WalletConnectScreen extends StatelessWidget {
   }
 
   scanWalletConnectRQ(BuildContext context,
-      {required WalletConnectCubit cubit}) {
+      { required WalletConnectCubit cubit}) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -120,13 +121,15 @@ class WalletConnectScreen extends StatelessWidget {
                     onDetect: (barcode, args) async {
                       if (barcode.rawValue == null) {
                         debugPrint('Failed to scan Barcode');
-                      } else {
-                        await cubit.init(wsUrl: barcode.rawValue!);
-                        Navigator.pop(context);
+                      } else{
+                          RunOnce().call(() async => await cubit.connect(wsUrl: barcode.rawValue!));
+                          Navigator.pop(context);
+                        
+                        
                       }
                     }),
               ),
-              TextButton(onPressed: () => cubit.init(wsUrl: "wc:2cc1ce8b2dbff965466616d7fe0d8484a6a8f7b0333664a104ad18eb04e5256c@2?relay-protocol=irn&symKey=368fe8a38e8c125c9599cffb3c8a4ae699e9b7fca75f7a218b914f781dea6eff"), child: Text("sdf"))
+              TextButton(onPressed: () => cubit.connect(wsUrl: "wc:27d22452c53938630646db524834a5a9fcefb0c7ed8bcf6e1f7516a87d08f514@2?relay-protocol=irn&symKey=f30b2808fa1bde3afb9d495b2568ac2810f86562558bfc66638b2a1998c32183"), child: Text("sdf"))
             ],
           ),
         );

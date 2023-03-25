@@ -6,13 +6,14 @@ import 'package:boxch/services/repository.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:solana/dto.dart';
+import 'package:solana/solana.dart';
 
 class SolanaNetwork {
   
    static Future loadBalance({required Map tokens}) async {
     List<Token> _balance = [];
     
-    final List<ProgramAccount> tokenAccountsByOwner = await SolanaRepository().getTokenAccountsByOwner();
+    final ProgramAccountsResult tokenAccountsByOwner = await mainnetSolanaClient.rpcClient.getTokenAccountsByOwner(wallet.address, TokenAccountsFilter.byProgramId(TokenProgram.programId), encoding: Encoding.jsonParsed, commitment: Commitment.processed);
     
     var solBalance = await mainnetSolanaClient.rpcClient.getBalance(wallet.address);
     _balance.add(Token(name: "Solana", 
@@ -22,7 +23,7 @@ class SolanaNetwork {
     balance: (solBalance.value / pow(10, 9)).toString(),
     image: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png"));
 
-    for (var element in tokenAccountsByOwner) { 
+    for (var element in tokenAccountsByOwner.value) { 
       final data = element.account.data as ParsedAccountData;
       var programData = data as ParsedSplTokenProgramAccountData;
       final parsed = programData.parsed as TokenAccountData;

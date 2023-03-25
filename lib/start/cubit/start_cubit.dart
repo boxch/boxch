@@ -1,15 +1,15 @@
 import 'package:boxch/start/cubit/start_states.dart';
 import 'package:boxch/models/wallet.dart';
-import 'package:boxch/services/repository.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:solana/base58.dart';
 import 'package:solana/solana.dart';
+import 'package:bip39/bip39.dart' as bip39;
 
 class StartCubit extends Cubit<StartStates> {
-  final SolanaRepository _repository = SolanaRepository();
   var box = Hive.box(walletBox);
 
   StartCubit({state})
@@ -21,7 +21,7 @@ class StartCubit extends Cubit<StartStates> {
             }
 
   Future<void> replaceCreateWallet() async {
-    final String mnemonic = await _repository.generationMnemonic;
+    final String mnemonic = bip39.generateMnemonic();
     emit(CreateWalletStartState(mnemonic: mnemonic));
   }
 
@@ -33,18 +33,20 @@ class StartCubit extends Cubit<StartStates> {
     emit(FirstScreenStartState());
   }
 
-  Future signInCreateWallet({required String seed}) async {
-    var value = await _repository.createUserWallet(seed.trim());
+  Future signInCreateWallet({required String mnemonic}) async {
+    var keyPair = await Ed25519HDKeyPair.fromMnemonic(mnemonic.trim());
+    var secretKey = await keyPair.extract();
     List<LocalWallet> localWallets = (box.get(boxWalletsKey) == null) ? <LocalWallet>[] : box.get(boxWalletsKey);
+
     var current = LocalWallet(
       network: "solana",
-      publicKey: value, 
-      secretKey: seed.trim());
+      publicKey: keyPair.publicKey.toBase58(), 
+      secretKey: base58encode(secretKey.bytes));
 
     localWallets.add(current);
     box.put(boxWalletsKey, localWallets);
     box.put(boxCurrentWalletKey, current);
-    wallet = await Wallet.fromMnemonic(current.secretKey);
+    wallet = keyPair;
 
     emit(AuthScreenStartState());
     }

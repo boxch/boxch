@@ -6,6 +6,7 @@ import 'package:boxch/utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:solana/base58.dart';
 import 'package:solana/solana.dart';
 import 'utils/config.dart';
 import 'package:boxch/translate/locale_string.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:get/get.dart';
-
 
 
 void main() async {
@@ -43,7 +43,7 @@ void main() async {
 
   if (Hive.box(walletBox).isNotEmpty) {
     final LocalWallet current = Hive.box(walletBox).get(boxCurrentWalletKey);
-    wallet = await Wallet.fromMnemonic(current.secretKey);
+    wallet = await Wallet.fromPrivateKeyBytes(privateKey: base58decode(current.secretKey));
   }
 
   runApp(BlocProvider<ThemeCubit>(

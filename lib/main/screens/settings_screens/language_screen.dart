@@ -39,13 +39,6 @@ class LanguageScreen extends StatelessWidget {
             },
             title: Text('english'.tr),
           ),
-          ListTile(
-            onTap: () {
-              changeLanguage(['ru', 'RU']);
-              Navigator.pop(context);
-            },
-            title: Text('russia'.tr),
-          ),
         ],
       ),
     );
