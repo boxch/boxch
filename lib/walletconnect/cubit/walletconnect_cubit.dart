@@ -38,17 +38,3 @@ class WalletConnectCubit extends Cubit<WalletConnectStates> {
     emit(WalletConnectScreenState(session: wcClient.sessions.getAll()));
   }
 }
-
-
-
-
-
-
-
-
-    // wcClient.registerRequestHandler(
-    //     chainId: "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
-    //     method: "solana_signMessage",
-    //     handler: (p0, p1) {
-          
-    //     },);

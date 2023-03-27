@@ -8,8 +8,7 @@ import 'package:iconsax/iconsax.dart';
 
 class ChooseTokensScreen extends StatefulWidget {
   final List<Token> tokens;
-  final Map? quick;
-  ChooseTokensScreen({required this.tokens, this.quick});
+  ChooseTokensScreen({required this.tokens});
 
   @override
   State<ChooseTokensScreen> createState() => _ChooseTokensScreenState();
@@ -57,15 +56,6 @@ class _ChooseTokensScreenState extends State<ChooseTokensScreen> {
                         borderSide: BorderSide.none,
                       ),
                       hintText: 'chooseCryptocurrency'.tr,
-                      suffixIcon: InkWell(
-                            onTap: () {
-                              _controllerSearch.clear();
-                              duplicateTokens.clear();
-                              setState(() {
-                                duplicateTokens.addAll(widget.tokens);
-                              });
-                            }, 
-                            child: Icon(Icons.clear, color: Theme.of(context).hintColor)),
                     ),
                   ),
               ),
@@ -85,7 +75,6 @@ class _ChooseTokensScreenState extends State<ChooseTokensScreen> {
                     onPressed: () => replaceWindow(
                           context,
                           SendScreen(
-                            quick: widget.quick,
                             name: duplicateTokens[index].name ?? "unknown",
                             symbol: duplicateTokens[index].symbol ?? "unknown",
                               address: duplicateTokens[index].address!, tokenBalance: duplicateTokens[index].balance)),

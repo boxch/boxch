@@ -4,9 +4,8 @@ class MenuItem extends StatefulWidget {
   final String text;
   final Function() onTap;
   final icon;
-  final double? iconSize;
   MenuItem(
-      {Key? key, required this.onTap, required this.text, required this.icon, this.iconSize})
+      {Key? key, required this.onTap, required this.text, required this.icon})
       : super(key: key);
 
   @override
@@ -32,30 +31,28 @@ class _MenuItemState extends State<MenuItem> {
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: widget.onTap,
-      child: Container(
-        height: 80.0,
-        width: 80.0,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(
-            color: Theme.of(context).hintColor.withOpacity(0.3), width: 1.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.01),
-                  blurRadius: 5.0,
-                  spreadRadius: 1.0)
-            ]),
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 4.0),
-            widget.icon,
-            Text(widget.text,
+      child: Column(
+        children: [
+          Container(
+            height: 55.0,
+            width: 55.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100.0),
+                border: Border.all(
+                color: Theme.of(context).hintColor.withOpacity(0.3), width: 0.5),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.01),
+                      blurRadius: 5.0,
+                      spreadRadius: 1.0)
+                ]),
+            padding: EdgeInsets.all(12.0),
+            child: widget.icon,
+          ),
+          SizedBox(height: 8.0),
+          Text(widget.text,
                 style: TextStyle(color: Theme.of(context).hintColor, fontSize: 9.0))
-          ],
-        ),
+        ],
       ),
     );
   }

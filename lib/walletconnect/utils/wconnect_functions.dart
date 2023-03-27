@@ -1,3 +1,4 @@
+import 'package:boxch/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:walletconnect_flutter_v2/apis/sign_api/models/sign_client_events.dart';
 
@@ -22,6 +23,12 @@ connectDappDialog(BuildContext context, {required SessionProposalEvent args}) =>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 50.0,
+                    width: 50.0,
+                    child: getImageIcon(image: args.params.proposer.metadata.icons[0], size: 50.0),
+                  ),
+                  SizedBox(height: 16.0),
                   Text("${args.params.proposer.metadata.name} wants to connect to your wallet"),
                   SizedBox(height: 8.0),
                   Text(args.params.proposer.metadata.url, style: TextStyle(color: Theme.of(context).hintColor))
@@ -50,7 +57,7 @@ connectDappDialog(BuildContext context, {required SessionProposalEvent args}) =>
       );
     });
 
-signTransactionDialog(BuildContext context, {required SessionProposalEvent args}) => showModalBottomSheet(
+signTransactionDialog(BuildContext context, {required dynamic par}) => showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     builder: (context) {
@@ -69,7 +76,9 @@ signTransactionDialog(BuildContext context, {required SessionProposalEvent args}
             SizedBox(
               child: Column(
                 children: [
-                  Text(args.params.pairingTopic)
+                  Flexible(
+                    flex: 10,
+                    child: Text(par.toString().substring(0, 100)))
                 ],
               ),
             ),

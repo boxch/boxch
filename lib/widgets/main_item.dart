@@ -6,7 +6,11 @@ class MainMenu extends StatefulWidget {
   final IconData icon;
   final double? iconSize;
   MainMenu(
-      {Key? key, required this.onTap, required this.text, required this.icon, this.iconSize})
+      {Key? key,
+      required this.onTap,
+      required this.text,
+      required this.icon,
+      this.iconSize})
       : super(key: key);
 
   @override
@@ -24,7 +28,6 @@ class _MainMenuState extends State<MainMenu> {
   //       setState(() {});
   // }
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,37 +35,28 @@ class _MainMenuState extends State<MainMenu> {
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: widget.onTap,
-      child: Container(
-        height: 120.0,
-        width: 100.0,
-        decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(25.0),
-            border: Border.all(
-              color: Colors.black,
-              width: 0.5
-            )),
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 80.0,
-              width: 80.0,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                border: Border.all(
-                    color: bezelState ? Colors.grey : Colors.black, width: 0.5),
+      child: Column(
+        children: [
+          Container(
+            height: 65.0,
+            width: 65.0,
+            decoration: BoxDecoration(
+              border: Border.all(color: Color.fromARGB(255, 79, 79, 83), width: 0.1
               ),
-              child: Icon(widget.icon, size: widget.iconSize ?? null, color: Theme.of(context).hintColor),
-            ),
-            SizedBox(height: 8.0),
-            Text(widget.text,
-                style: TextStyle(color: Theme.of(context).hintColor, fontSize: 12.0))
-          ],
-        ),
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(100.0)),
+            padding: EdgeInsets.all(8.0),
+            child: Icon(widget.icon,
+                size: widget.iconSize ?? null,
+                color: Theme.of(context).hintColor),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            widget.text,
+            style:
+                TextStyle(fontSize: 11.0, color: Theme.of(context).hintColor),
+          )
+        ],
       ),
     );
   }

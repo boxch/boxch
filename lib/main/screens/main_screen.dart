@@ -1,7 +1,5 @@
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/cubit/main_states.dart';
-import 'package:boxch/main/screens/add_contact_screen.dart';
-import 'package:boxch/main/screens/all_contacts_screen.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/history_transactions_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
@@ -12,7 +10,6 @@ import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
 import 'package:boxch/widgets/main_item.dart';
 import 'package:boxch/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:boxch/history/history_cubit.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/functions.dart';
@@ -64,8 +61,8 @@ class MainScreen extends StatelessWidget {
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               highlightColor: Colors.transparent,
-                              onTap: () => menuCard(context),
-                              child: Icon(Iconsax.menu),
+                              onTap: () => menuBottomSheet(context),
+                              child: Icon(Iconsax.menu, color: Theme.of(context).hintColor),
                             ),
                             SizedBox(width: 16.0),
                             InkWell(
@@ -83,14 +80,13 @@ class MainScreen extends StatelessWidget {
                                 children: [
                                   Text(userGreeting(),
                                       style: TextStyle(
-                                          fontSize: 14.0,
+                                          fontSize: 13.0,
                                           color: Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                              .withOpacity(0.5))),
+                                              .hintColor)),
+                                  SizedBox(height: 2.0),
                                   Text(
                                       "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}  ❐",
-                                      style: TextStyle(fontSize: 14.0)),
+                                      style: TextStyle(fontSize: 13.0)),
                                 ],
                               ),
                             ),
@@ -101,7 +97,7 @@ class MainScreen extends StatelessWidget {
                     )
                   ]),
                   bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(260.0),
+                    preferredSize: Size.fromHeight(220.0),
                     child: Column(children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -115,13 +111,15 @@ class MainScreen extends StatelessWidget {
                                   Text(
                                     'totalBalanceText'.tr,
                                     style: TextStyle(
-                                        fontSize: 12.0,
+                                        fontSize: 11.0,
                                         color: Theme.of(context).hintColor),
                                   ),
+                                  SizedBox(height: 4.0),
                                   state.totalBalance == "*,**"
                                       ? Text(state.totalBalance,
                                           style: TextStyle(
-                                            fontSize: 40.0,
+                                            fontSize: 36.0,
+                                            color: Theme.of(context).cardColor
                                           ))
                                       : Countup(
                                           precision: 2,
@@ -132,10 +130,10 @@ class MainScreen extends StatelessWidget {
                                           separator: ",",
                                           duration: Duration(milliseconds: 1500),
                                           style: TextStyle(
-                                            fontSize: 40.0,
+                                            fontSize: 36.0,
+                                            color: Theme.of(context).cardColor
                                           ),
                                         ),
-                                  SizedBox(height: 8.0),
                                 ],
                               ),
                               Container(
@@ -163,44 +161,28 @@ class MainScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 135.0,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.all(8.0),
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: MainMenu(
+                      SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          MainMenu(
                                 icon: Iconsax.arrow_down,
-                                onTap: () => receiveAddress(context),
+                                onTap: () => receiveBottomSheet(context),
                                 text: "Receive",
                               ),
-                            ),
-                            SizedBox(width: 16.0),
                             MainMenu(
                               icon: Iconsax.arrow_up_3,
                               onTap: () => replaceWindow(
                                   context, ChooseTokensScreen(tokens: state.tokens)),
                               text: "Send",
                             ),
-                            SizedBox(width: 16.0),
                             MainMenu(
                               icon: Iconsax.card,
                               onTap: () => tradingMethods(context),
                               text: "Buy",
                             ),
-                            SizedBox(width: 16.0),
-                            MainMenu(
-                              icon: Iconsax.layer,
-                              onTap: () {},
-                              text: "Earn",
-                            ),
-                          ],
-                        ),
-                      )
+                        ],
+                      ),
                     ]),
                   ),
                 ),
@@ -220,224 +202,12 @@ class MainScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(height: 16.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('quickSend'.tr, style: TextStyle(fontSize: 16.0)),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () => replaceWindow(
-                                  context,
-                                  AllContactsScreen(
-                                      tokenList: state.tokens,
-                                      contacts: Hive.box(mainBox).get(boxContactsKey) != null ? Hive.box(mainBox)
-                                              .get(boxContactsKey)
-                                              .reversed
-                                              .toList() : [])),
-                              child: Text('viewAll'.tr,
-                                  style:
-                                      TextStyle(color: Theme.of(context).hintColor)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 112.0,
-                        child: state.contacts!.isNotEmpty
-                            ? ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.contacts!.length,
-                                itemBuilder: ((context, index) {
-                                  return index == 0
-                                      ? Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 16.0,
-                                                  bottom: 8.0,
-                                                  right: 8.0,
-                                                  top: 8.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                highlightColor: Colors.transparent,
-                                                onTap: () => replaceWindow(
-                                                    context, AddContactScreen()),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Container(
-                                                      alignment: Alignment.center,
-                                                      child: Icon(Icons.add,
-                                                          color: Theme.of(context)
-                                                              .hintColor),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  25.0),
-                                                          color: Theme.of(context)
-                                                              .primaryColor),
-                                                      height: 80.0,
-                                                      width: 80.0,
-                                                    ),
-                                                    SizedBox(height: 2.0),
-                                                    Text("",
-                                                        style:
-                                                            TextStyle(fontSize: 10.0))
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 8.0, horizontal: 4.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                highlightColor: Colors.transparent,
-                                                onTap: () => replaceWindow(
-                                                    context,
-                                                    ChooseTokensScreen(
-                                                        quick: state.contacts![index],
-                                                        tokens: state.tokens)),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(25.0),
-                                                      child: Container(
-                                                        alignment: Alignment.center,
-                                                        child: state.contacts![index]
-                                                                    ['image'] !=
-                                                                ""
-                                                            ? Image.file(
-                                                                File.fromUri(Uri.parse(
-                                                                    state.contacts![index]
-                                                                        ['image'])),
-                                                                height: 80.0,
-                                                                width: 80.0,
-                                                                fit: BoxFit.fill)
-                                                            : Text(
-                                                                state.contacts![index]
-                                                                        ['name']
-                                                                    .toString()
-                                                                    .substring(0, 1),
-                                                                style: TextStyle(
-                                                                    fontSize: 21.0)),
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  25.0),
-                                                          color: Theme.of(context)
-                                                              .primaryColor,
-                                                        ),
-                                                        height: 80.0,
-                                                        width: 80.0,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 2.0),
-                                                    Text(
-                                                        state.contacts![index]
-                                                            ['name'],
-                                                        style:
-                                                            TextStyle(fontSize: 10.0))
-                                                  ],
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      : Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 8.0, horizontal: 4.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () => replaceWindow(
-                                                context,
-                                                ChooseTokensScreen(
-                                                    tokens: state.tokens,
-                                                    quick: state.contacts![index])),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25.0),
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: state.contacts![index]
-                                                                ['image'] !=
-                                                            ""
-                                                        ? Image.file(
-                                                            File.fromUri(Uri.parse(
-                                                                state.contacts![index]
-                                                                    ['image'])),
-                                                            height: 80.0,
-                                                            width: 80.0,
-                                                            fit: BoxFit.fill)
-                                                        : Text(
-                                                            state.contacts![index]
-                                                                    ['name']
-                                                                .toString()
-                                                                .substring(0, 1),
-                                                            style: TextStyle(
-                                                                fontSize: 21.0)),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(25.0),
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                    ),
-                                                    height: 80.0,
-                                                    width: 80.0,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 2.0),
-                                                Text(state.contacts![index]['name'],
-                                                    style: TextStyle(fontSize: 10.0))
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                }),
-                              )
-                            : Container(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 16.0, bottom: 8.0, right: 8.0, top: 8.0),
-                                  child: InkWell(
-                                    onTap: () =>
-                                        replaceWindow(context, AddContactScreen()),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      child: Icon(Icons.add,
-                                          color: Theme.of(context).hintColor),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(25.0),
-                                          color: Theme.of(context).primaryColor),
-                                      height: 80.0,
-                                      width: 80.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ),
+                      SizedBox(height: 32.0),
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child:
-                            Text('assetsText'.tr, style: TextStyle(fontSize: 16.0)),
+                            Text('assetsText'.tr, style: TextStyle(fontSize: 16.0, color: Theme.of(context).cardColor)),
                       ),
                       SizedBox(height: 8.0),
                       Expanded(
@@ -468,6 +238,13 @@ class MainScreen extends StatelessWidget {
                                   : '\$${state.tokens[index].usdBalance}');
                         },
                       )),
+                      Container(
+                        height: 70.0,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          border: Border.fromBorderSide(BorderSide(strokeAlign: 1, color: Theme.of(context).primaryColor, width: 1.0))
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -491,7 +268,7 @@ class MainScreen extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           child: Container(
-            height: MediaQuery.of(context).size.height / 4,
+            height: 160.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
@@ -511,7 +288,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     children: [
                       ListTile(
@@ -537,7 +314,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  menuCard(BuildContext context) {
+  menuBottomSheet(BuildContext context) {
     showModalBottomSheet(
       barrierColor: Colors.black.withOpacity(0.5),
       backgroundColor: Colors.transparent,
@@ -547,7 +324,7 @@ class MainScreen extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           child: Container(
-            height: MediaQuery.of(context).size.height / 3,
+            height: 160.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
@@ -568,17 +345,18 @@ class MainScreen extends StatelessWidget {
                     child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      MenuItem(onTap: () {}, text: "earnText".tr,
+                       icon: Icon(Iconsax.layer, color: Colors.blue)),
                       MenuItem(onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
                         create: (context) => WalletConnectCubit(context),
                         child: WalletConnectScreen(),
                       )), 
-                      text: "Connect", icon: Image.asset("assets/images/wallet_connect.png", height: 35.0, width: 35.0)),
-                      SizedBox(width: 16.0),
+                      text: "Connect", icon: Image.asset("assets/images/wallet_connect.png", height: 25.0, width: 25.0)),
                       MenuItem(onTap: () => replaceWindow(context, SettingsScreen()), text: "settingsText".tr,
-                       icon: Image.asset("assets/images/settings.png", height: 35.0, width: 35.0))
+                       icon: Icon(Iconsax.setting, color: Colors.blue))
                     ],
                   ),
                 )),
@@ -590,7 +368,7 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  receiveAddress(BuildContext context) {
+  receiveBottomSheet(BuildContext context) {
   showModalBottomSheet(
     barrierColor: Colors.black.withOpacity(0.5),
     backgroundColor: Colors.transparent,
@@ -615,7 +393,7 @@ class MainScreen extends StatelessWidget {
                 width: 60.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50.0),
-                  color: Theme.of(context).cardColor
+                  color: Theme.of(context).primaryColor
                 ),
               ),
               SizedBox(height: 16.0),

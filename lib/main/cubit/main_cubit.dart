@@ -1,14 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
+import 'package:boxch/main/screens/settings_screens/info_screen.dart';
 import 'package:boxch/models/token.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
+import 'package:boxch/utils/functions.dart';
 import 'package:boxch/walletconnect/utils/wconnect_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:solana/base58.dart';
+import 'package:solana/dto.dart';
 import 'package:solana/encoder.dart';
 import 'package:solana/solana.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -62,10 +67,7 @@ class MainCubit extends Cubit<MainStates> {
       emit(MainScreenState(
           tokens: balance,
           totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState,
-          contacts: box.get(boxContactsKey) != null
-              ? box.get(boxContactsKey).reversed.toList()
-              : []));
+          hideBalanceState: hideBalanceState));
     }
   }
 
@@ -76,10 +78,7 @@ class MainCubit extends Cubit<MainStates> {
       emit(MainScreenState(
           tokens: balance,
           totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState,
-          contacts: box.get(boxContactsKey) != null
-              ? box.get(boxContactsKey).reversed.toList()
-              : []));
+          hideBalanceState: hideBalanceState));
     }
   }
 
@@ -96,10 +95,7 @@ class MainCubit extends Cubit<MainStates> {
       emit(MainScreenState(
           tokens: balance,
           totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState,
-          contacts: box.get(boxContactsKey) != null
-              ? box.get(boxContactsKey).reversed.toList()
-              : []));
+          hideBalanceState: hideBalanceState));
   }
 
   Future sendTokenTransaction(
@@ -178,59 +174,6 @@ class MainCubit extends Cubit<MainStates> {
     emit(MainScreenState(
         tokens: balance,
         totalBalance: hideBalanceState ? "*,**" : totalBalance,
-        hideBalanceState: hideBalanceState,
-        contacts: box.get(boxContactsKey) != null
-            ? box.get(boxContactsKey).reversed.toList()
-            : []));
-  }
-
-  Future<void> addContact(
-      {required String name,
-      required String address,
-      required String imageUrl}) async {
-    if (box.get(boxContactsKey) == null) {
-      box.put(boxContactsKey, [
-        {"image": imageUrl, "name": name, "address": address}
-      ]);
-      emit(MainScreenState(
-          contacts: [
-            {"image": imageUrl, "name": name, "address": address}
-          ],
-          tokens: balance,
-          totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState));
-    } else {
-      var list = box.get(boxContactsKey);
-      list.add({"image": imageUrl, "name": name, "address": address});
-      box.put(boxContactsKey, list);
-      emit(MainScreenState(
-          contacts: list.reversed.toList(),
-          tokens: balance,
-          totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState));
-    }
-  }
-
-  Future<void> deleteContact({required String name, required List list}) async {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i]['name'] == name) {
-        list.removeAt(i);
-      }
-    }
-    box.put(boxContactsKey, list);
-    emit(MainScreenState(
-        contacts: list.reversed.toList(),
-        tokens: balance,
-        totalBalance: hideBalanceState ? "*,**" : totalBalance,
-        hideBalanceState: hideBalanceState));
-  }
-
-  void saveNewShape({required contactsList}) {
-    box.put(boxContactsKey, contactsList);
-    emit(MainScreenState(
-        contacts: contactsList.reversed.toList(),
-        tokens: balance,
-        totalBalance: hideBalanceState ? "*,**" : totalBalance,
         hideBalanceState: hideBalanceState));
   }
 
@@ -247,19 +190,14 @@ class MainCubit extends Cubit<MainStates> {
             chainId: "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
             method: "solana_signTransaction",
             handler: (String topic, dynamic parametrs) async {
-              var userApproved =
-                  await signTransactionDialog(context, args: args);
+              var userApproved = await signTransactionDialog(context, par: parametrs);
               if (userApproved) {
                 // Returned value must by a primitive, or a JSON serializable object: Map, List, etc.
-                print(parametrs['signatures'][0]['instructions']);
-                // List instructions = parameters['signatures']['instructions'];
-                // instructions.forEach((element) {
-                //     Instruction(programId: element['programId'], accounts: accounts, data: data)
-                // })
 
-                var signature = await wallet.sign(ByteArray.fromString(parametrs['signatures']));
+                var signature = await wallet.sign(ByteArray.fromString(parametrs.toString()));
 
-                return { "signature": signature.toBase58() };
+                return json.encode({"signature": signature.toBase58()});
+
               } else {
                 throw Errors.getSdkError(Errors.USER_REJECTED_SIGN);
               }
@@ -269,7 +207,7 @@ class MainCubit extends Cubit<MainStates> {
           chainId: "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
           method: "solana_signMessage",
           handler: (String topic, dynamic parametrs) async {
-            var userApproved = await signTransactionDialog(context, args: args);
+            var userApproved = await signTransactionDialog(context, par: parametrs);
             if (userApproved) {
               print(parametrs);
               

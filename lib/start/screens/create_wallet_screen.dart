@@ -85,22 +85,24 @@ class CreateWalletScreen extends StatelessWidget {
                               child: InkWell(
                             onTap: () async {
                                 await _cubit.signInCreateWallet(
+                                      keyState: false,
                                       mnemonic: mnemonic);
                               },
                             child: Container(
-                                height: 50.0,
+                                height: 55.0,
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0, color: Colors.black)),
-                                    Icon(Iconsax.arrow_right_1, size: 21.0, color: Colors.black),
+                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0, color: Theme.of(context).cardColor)),
+                                    Icon(Iconsax.arrow_right_1, size: 21.0, color: Colors.grey),
                                 ],),
                                 decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 0.1),
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color:  Theme.of(context).colorScheme.onPrimary
+                                  color:  Theme.of(context).primaryColor
                                   
                                 ),
                               ),

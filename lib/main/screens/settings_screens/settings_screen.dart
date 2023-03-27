@@ -100,10 +100,9 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               onTap: () => replaceWindow(context, LanguageScreen()),
               leading: Icon(Iconsax.language_square,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
+                  color: Theme.of(context).cardColor, size: 21.0),
               title:
-                  Text('changeLanguage'.tr, style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  Text('changeLanguage'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -113,10 +112,9 @@ class SettingsScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Iconsax.key,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
+                  color: Theme.of(context).cardColor, size: 21.0),
               title:
-                  Text('privateKeyText'.tr, style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  Text('privateKeyText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () {
                 var box = Hive.box(walletBox);
                 final LocalWallet current = box.get(boxCurrentWalletKey);
@@ -126,10 +124,9 @@ class SettingsScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Iconsax.password_check,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
+                  color: Theme.of(context).cardColor, size: 21.0),
               title: Text('changePasswordText'.tr,
-                  style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () {
                 replaceWindow(context, ChangePasswordScreen());
               },
@@ -142,10 +139,9 @@ class SettingsScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Iconsax.star,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
+                  color: Theme.of(context).cardColor),
               title:
-                  Text('likingBoxchText'.tr, style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  Text('likingBoxchText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async {
                 if (Platform.isIOS) {
                   replaceWindow(context, WebviewScreen(urlLink: appInAppStore));
@@ -159,9 +155,8 @@ class SettingsScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Iconsax.message_question,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
-              title: Text('needHelpText'.tr, style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  color: Theme.of(context).cardColor, size: 21.0),
+              title: Text('needHelpText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () =>
                   replaceWindow(context, WebviewScreen(urlLink: telegramChat)),
             ),
@@ -173,10 +168,9 @@ class SettingsScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Iconsax.lock,
-                  color: Theme.of(context).colorScheme.secondary, size: 21.0),
+                  color: Theme.of(context).cardColor, size: 21.0),
               title: Text('privacyPolicyText'.tr,
-                  style: TextStyle(fontSize: 14.0)),
-              trailing: Icon(Icons.navigate_next_outlined),
+                  style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async => await launchUrl(Uri.parse(privacyPolicy)),
             ),
             Padding(
@@ -188,10 +182,10 @@ class SettingsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     color: Theme.of(context).primaryColor,
-                    border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.5), width: 0.5)
+                    border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.5), width: 0.1)
                   ),
                   child: Text("exitText".tr,
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).hintColor)),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).cardColor)),
                   height: 50.0,
                   width: MediaQuery.of(context).size.width,
                 ),

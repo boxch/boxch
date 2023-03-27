@@ -1,4 +1,4 @@
-const String termsOfCond = "https://docs.boxch.net/get-started/privacy-policy";
+const String termsOfCond = "https://docs.boxch.net/p/dSdEClI0G85ZlI/Terms-of-conditions";
 const String privacyPolicy = "https://docs.boxch.net/get-started/privacy-policy";
 const String telegramChat = "https://t.me/boxch_en";
 

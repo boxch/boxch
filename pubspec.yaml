@@ -21,7 +21,6 @@ dependencies:
   flutter_bloc: ^8.0.1
   hive: ^2.2.1
   oktoast: ^3.2.0
-  animated_background: ^2.0.0
   flutter_svg: ^1.1.6
   easy_localization: ^3.0.1
   webview_flutter: ^3.0.4
@@ -33,13 +32,8 @@ dependencies:
   dropdown_button2: ^1.8.9
   slide_to_act: ^2.0.1
   shimmer_animation: ^2.1.0
-  favicon: ^1.1.1
   walletconnect_flutter_v2: ^1.2.0
-  # solana_wallet_adapter: ^0.0.4+1
-
-
-  image_picker: ^0.8.6
-  # flutter_image_compress: ^1.1.3
+  local_auth: ^2.1.6
   
   #  flutter_vibrate: ^1.3.0
   #  chart_sparkline: ^1.0.11

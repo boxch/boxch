@@ -1,7 +1,6 @@
 # # Boxch Wallet
 
-Non custodial application on Solana blockchain.
-The idea is to create an app where users have full control over their key pair and can use secure smart contracts around the app. Launchpad, P2P, Token earn. As well as some secure dApps that have been vetted
+Non-custodial wallet
 
 Download here https://boxch.net
 
@@ -12,14 +11,12 @@ Boxch Wallet Prototype supports a number features such as:
 * Send and receive SOL token and SPL tokens
 * Transaction history
 * QR code generation
-* One-tap access to swap assets
 * Nice UI
 
 Further development:
 * Improving security
 * Buy&Sell crypto
 * Earn tokens
-* Send and receive wrapped tokens to/from other Blockchain
 
 # Build
 
@@ -38,4 +35,3 @@ If you'd rather build the application yourself, please ensure you have flutter/d
 ```flutter build apk```
 
 ```IMPORTANT! The standard Solana RPC API is limited in speed, which can cause problems with launching the application. To fix this, please use private entrepoints```
-

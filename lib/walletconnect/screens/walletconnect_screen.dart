@@ -129,7 +129,7 @@ class WalletConnectScreen extends StatelessWidget {
                       }
                     }),
               ),
-              TextButton(onPressed: () => cubit.connect(wsUrl: "wc:27d22452c53938630646db524834a5a9fcefb0c7ed8bcf6e1f7516a87d08f514@2?relay-protocol=irn&symKey=f30b2808fa1bde3afb9d495b2568ac2810f86562558bfc66638b2a1998c32183"), child: Text("sdf"))
+              TextButton(onPressed: () => cubit.connect(wsUrl: "wc:209f39208606fa0547eee2c9625fc76877dc5ca3e43b26c55eb2777675519c3b@2?relay-protocol=irn&symKey=10600a3b2498a2930ae943fc898ee07bae5f1e56d6e40241c44d9624cec7c7e4"), child: Text("sdf"))
             ],
           ),
         );

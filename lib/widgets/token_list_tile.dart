@@ -50,7 +50,7 @@ class TokenListTile extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(title, style: TextStyle(fontSize: 15.0)),
+                              Text(title, style: TextStyle(fontSize: 15.0, color: Theme.of(context).cardColor)),
                               Text(subtitle,
                                   style: TextStyle(
                                       fontSize: 13.0,
@@ -63,10 +63,11 @@ class TokenListTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(trailingTitle, style: TextStyle(fontSize: 16.0)),
+                    Text(trailingTitle, style: TextStyle(fontSize: 16.0, color: Theme.of(context).cardColor)),
                     Text(trailingSubtitle,
                         style: TextStyle(
                             fontSize: 10.0,
+                            color: Theme.of(context).cardColor
                             )),
                   ],
                 ),

@@ -33,21 +33,20 @@ class StartCubit extends Cubit<StartStates> {
     emit(FirstScreenStartState());
   }
 
-  Future signInCreateWallet({required String mnemonic}) async {
-    var keyPair = await Ed25519HDKeyPair.fromMnemonic(mnemonic.trim());
-    var secretKey = await keyPair.extract();
-    List<LocalWallet> localWallets = (box.get(boxWalletsKey) == null) ? <LocalWallet>[] : box.get(boxWalletsKey);
+  Future signInCreateWallet({required bool keyState, required String mnemonic}) async {
+      var keyPair = keyState ? await Ed25519HDKeyPair.fromPrivateKeyBytes(privateKey: base58decode(mnemonic.trim())) : await Ed25519HDKeyPair.fromMnemonic(mnemonic.trim());
+      var secretKey = await keyPair.extract();
+      List<LocalWallet> localWallets = (box.get(boxWalletsKey) == null) ? <LocalWallet>[] : box.get(boxWalletsKey);
+          var current = LocalWallet(
+        network: "solana",
+        publicKey: keyPair.publicKey.toBase58(), 
+        secretKey: base58encode(secretKey.bytes));
 
-    var current = LocalWallet(
-      network: "solana",
-      publicKey: keyPair.publicKey.toBase58(), 
-      secretKey: base58encode(secretKey.bytes));
+      localWallets.add(current);
+      box.put(boxWalletsKey, localWallets);
+      box.put(boxCurrentWalletKey, current);
+      wallet = keyPair;
 
-    localWallets.add(current);
-    box.put(boxWalletsKey, localWallets);
-    box.put(boxCurrentWalletKey, current);
-    wallet = keyPair;
-
-    emit(AuthScreenStartState());
+      emit(AuthScreenStartState());
     }
 }

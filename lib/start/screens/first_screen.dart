@@ -19,8 +19,8 @@ class StartScreen extends StatelessWidget {
               appBar: AppBar(
                 elevation: 0.0,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                title: Text("Boxch Wallet", style: TextStyle(color: Theme.of(context).hintColor)),
-                centerTitle: false,
+                title: Text("Boxch.net", style: TextStyle(fontSize: 16.0, color: Theme.of(context).hintColor)),
+                centerTitle: true,
               ),
               body: Stack(
                 alignment: Alignment.center,
@@ -81,8 +81,9 @@ class StartScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width,
                                 child: Text('createWalletButtonText'.tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 0.1),
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Theme.of(context).cardColor,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
@@ -103,8 +104,9 @@ class StartScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width,
                                 child: Text('importWalletButtonText'.tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 0.1),
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Theme.of(context).cardColor
+                                  color: Theme.of(context).primaryColor
                                 ),
                               ),
                           ),

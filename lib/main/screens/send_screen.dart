@@ -10,7 +10,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:slide_to_act/slide_to_act.dart';
-import 'package:solana/dto.dart';
 
 // ignore: must_be_immutable
 class SendScreen extends StatefulWidget {
@@ -18,8 +17,7 @@ class SendScreen extends StatefulWidget {
   final String symbol;
   final String address;
   final tokenBalance;
-  Map? quick;
-  SendScreen({required this.name, required this.address, required this.symbol, required this.tokenBalance, this.quick});
+  SendScreen({required this.name, required this.address, required this.symbol, required this.tokenBalance});
   static TextEditingController destinationWallet = TextEditingController();
 
   @override
@@ -77,46 +75,6 @@ class _SendScreenState extends State<SendScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Column(
-                  children: [
-                   widget.quick != null ? Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                     child: Container(
-                       height: 100.0,
-                       padding: EdgeInsets.symmetric(horizontal: 16.0),
-                       width: MediaQuery.of(context).size.width,
-                       decoration: BoxDecoration(
-                         color: Theme.of(context).primaryColor,
-                         borderRadius: BorderRadius.circular(30.0),
-                       ),
-                       child: Row(
-                         children: [
-                           ClipRRect(
-                             borderRadius: BorderRadius.circular(20.0),
-                             child: Container(
-                               alignment: Alignment.center,
-                               height: 80.0,
-                               width: 80.0,
-                               child: widget.quick!['image'] != "" ? Image.file(File.fromUri(Uri.parse(widget.quick!['image'])), height: 80.0, width: 80.0, fit: BoxFit.fill) : Text(widget.quick!['name'].toString().substring(0, 1), style: TextStyle(fontSize: 21.0)),
-                               decoration: BoxDecoration(
-                                 color: Colors.grey.withOpacity(0.3),
-                                 borderRadius: BorderRadius.circular(20.0)
-                               ),
-                             ),
-                           ),
-                           SizedBox(width: 16.0),
-                           Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                               Text(widget.quick!["name"], style: TextStyle(fontSize: 18.0)),
-                               SizedBox(height: 8.0),
-                               Text("${widget.quick!["address"].toString().substring(0, 2)} . . . ${widget.quick!["address"].toString().substring(widget.quick!["address"].toString().length - 16, widget.quick!["address"].toString().length)}", style: TextStyle(color: Theme.of(context).hintColor)),
-                             ],
-                           ),
-                         ],
-                       ),
-                     ),
-                   )  : Column(
                      children: [
                       SizedBox(),
                        Padding(
@@ -205,22 +163,9 @@ class _SendScreenState extends State<SendScreen> {
                           alignment: Alignment.center,
                           child: Text('Balance: ${widget.tokenBalance} ${widget.symbol}'),
                         ),
-                      widget.quick == null ?  Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.topRight,
-                      child: InkWell(
-                        onTap: () => replaceWindow(context, QRScreen()),
-                        child: SizedBox(
-                          height: 35.0,
-                          width: 35.0,
-                          child: Icon(Iconsax.scan, color: Colors.amber),
-                        )),
-                    ) : Container(),
                       ],
                     ),
                     SizedBox(height: 16.0),
-                  ],
-                ),
                 Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -278,14 +223,13 @@ class _SendScreenState extends State<SendScreen> {
                     submittedIcon: Icon(Iconsax.more, color: Theme.of(context).hintColor),
                     onSubmit: () async {
                       if (valueNumber != null) {
-                          tx = await _cubit.sendTokenTransaction(address: widget.quick != null ? widget.quick!['address'] : SendScreen.destinationWallet.text,
+                          tx = await _cubit.sendTokenTransaction(address: SendScreen.destinationWallet.text,
                           amount: double.parse(valueNumber), mintAddress: widget.address, symbol: widget.symbol);
                           replaceWindow(context, TransactionStatusScreen());
                         }
                     },
                   ),
-                ),
-              ],
-            )));
+        )]  ),)
+            );
   }
 }

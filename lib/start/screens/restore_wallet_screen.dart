@@ -1,13 +1,22 @@
 import 'package:boxch/start/cubit/start_cubit.dart';
+import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-class RestoreWalletScreen extends StatelessWidget {
+class RestoreWalletScreen extends StatefulWidget {
   static TextEditingController controllerRestoreWallet = TextEditingController();
   const RestoreWalletScreen({ Key? key }) : super(key: key);
+
+  @override
+  State<RestoreWalletScreen> createState() => _RestoreWalletScreenState();
+}
+
+class _RestoreWalletScreenState extends State<RestoreWalletScreen> {
+
+  bool keyState = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +40,33 @@ class RestoreWalletScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 16.0),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'enterMnemonicText'.tr,
-                        style: TextStyle(fontSize: 21.0),
+                      child: Row(
+                        children: [
+                          CustomInkWell(
+                            onTap: () {
+                              keyState = false;
+                              setState(() {});
+                            },
+                            child: Text(
+                              'enterMnemonicText'.tr,
+                              style: TextStyle(fontSize: 18.0, color: keyState ? Theme.of(context).hintColor.withOpacity(0.5) : Theme.of(context).cardColor),
+                            ),
+                          ),
+                          SizedBox(width: 16.0),
+                          CustomInkWell(
+                            onTap: () {
+                              keyState = true;
+                              setState(() {});
+                            },
+                            child: Text(
+                              'enterPrivateKeyText'.tr,
+                              style: TextStyle(fontSize: 18.0, color: keyState ? Theme.of(context).cardColor : Theme.of(context).hintColor.withOpacity(0.5)),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 16.0),
@@ -43,7 +74,7 @@ class RestoreWalletScreen extends StatelessWidget {
                       padding: EdgeInsets.all(16.0),
                       child: SizedBox(
                         child: TextFormField(
-                          controller: controllerRestoreWallet,
+                          controller: RestoreWalletScreen.controllerRestoreWallet,
                           minLines: 4,
                           maxLines: 5,
                           decoration: InputDecoration(
@@ -62,7 +93,7 @@ class RestoreWalletScreen extends StatelessWidget {
                               onPressed: () {
                                 Clipboard.getData(Clipboard.kTextPlain).then(
                                     (value) =>
-                                        controllerRestoreWallet.text = value!.text!);
+                                        RestoreWalletScreen.controllerRestoreWallet.text = value!.text!);
                               },
                             ),
                           ),
@@ -77,7 +108,8 @@ class RestoreWalletScreen extends StatelessWidget {
                               child: InkWell(
                             onTap: () async {
                                 await _cubit.signInCreateWallet(
-                                      mnemonic: controllerRestoreWallet.text);
+                                      keyState: keyState,
+                                      mnemonic: RestoreWalletScreen.controllerRestoreWallet.text);
                               },
                             child: Container(
                                 height: 50.0,
@@ -87,12 +119,13 @@ class RestoreWalletScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0, color: Colors.black)),
-                                    Icon(Iconsax.arrow_right_1, size: 21.0, color: Colors.black),
+                                    Text('signInText'.tr, style: TextStyle(fontSize: 21.0, color: Theme.of(context).cardColor)),
+                                    Icon(Iconsax.arrow_right_1, size: 21.0, color: Colors.grey),
                                 ],),
                                 decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 0.1),
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Theme.of(context).colorScheme.onPrimary
+                                  color: Theme.of(context).primaryColor
                                 ),
                               ),
                             ),
