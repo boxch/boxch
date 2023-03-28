@@ -16,7 +16,7 @@ class SolanaNetwork {
     final ProgramAccountsResult tokenAccountsByOwner = await mainnetSolanaClient.rpcClient.getTokenAccountsByOwner(wallet.address, TokenAccountsFilter.byProgramId(TokenProgram.programId), encoding: Encoding.jsonParsed, commitment: Commitment.processed);
     
     var solBalance = await mainnetSolanaClient.rpcClient.getBalance(wallet.address);
-    _balance.add(Token(name: "Solana", 
+    _balance.add(Token(
     symbol: "SOL", 
     address: SOL, 
     decimals: 9, 
@@ -31,7 +31,6 @@ class SolanaNetwork {
       if (tokens[parsed.info.mint] != null) {
         _balance.add(Token(
                 price: "0.0",
-                name: tokens[parsed.info.mint]!['name'],
                 symbol: tokens[parsed.info.mint]!['symbol'],
                 address: parsed.info.mint,
                 decimals: parsed.info.tokenAmount.decimals,
@@ -41,7 +40,6 @@ class SolanaNetwork {
       } else {
         _balance.add(Token(
                 price: "0.0",
-                name: null,
                 symbol: null,
                 address: parsed.info.mint,
                 decimals: parsed.info.tokenAmount.decimals,

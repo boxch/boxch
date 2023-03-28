@@ -13,11 +13,10 @@ import 'package:slide_to_act/slide_to_act.dart';
 
 // ignore: must_be_immutable
 class SendScreen extends StatefulWidget {
-  final String name;
   final String symbol;
   final String address;
   final tokenBalance;
-  SendScreen({required this.name, required this.address, required this.symbol, required this.tokenBalance});
+  SendScreen({required this.address, required this.symbol, required this.tokenBalance});
   static TextEditingController destinationWallet = TextEditingController();
 
   @override

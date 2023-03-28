@@ -194,9 +194,11 @@ class MainCubit extends Cubit<MainStates> {
               if (userApproved) {
                 // Returned value must by a primitive, or a JSON serializable object: Map, List, etc.
 
-                var signature = await wallet.sign(ByteArray.fromString(parametrs.toString()));
+                var signature = await wallet.sign(ByteArray.fromString(parametrs['instructions'].toString()));
 
-                return json.encode({"signature": signature.toBase58()});
+               
+
+                return {"signature": signature.toBase58()};
 
               } else {
                 throw Errors.getSdkError(Errors.USER_REJECTED_SIGN);

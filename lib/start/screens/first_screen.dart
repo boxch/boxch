@@ -5,6 +5,7 @@ import 'package:boxch/widgets/checkbox_wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class StartScreen extends StatelessWidget {
@@ -63,7 +64,12 @@ class StartScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                          Material(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Material(
                             color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.circular(10.0),
                             child: InkWell(
@@ -78,7 +84,7 @@ class StartScreen extends StatelessWidget {
                               child: Container(
                                 height: 50.0,
                                 alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width / 1.5,
                                 child: Text('createWalletButtonText'.tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey, width: 0.1),
@@ -88,7 +94,7 @@ class StartScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          SizedBox(height: 8.0),
                           InkWell(
                               onTap: () {
                                 if (CheckBoxWallet.checkBoxButton) {
@@ -101,7 +107,7 @@ class StartScreen extends StatelessWidget {
                               child: Container(
                                 height: 50.0,
                                 alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width / 1.5,
                                 child: Text('importWalletButtonText'.tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey, width: 0.1),
@@ -110,6 +116,27 @@ class StartScreen extends StatelessWidget {
                                 ),
                               ),
                           ),
+                            ],
+                          ),
+                          Container(
+                            height: 105.0,
+                            width: 90.0,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Iconsax.strongbox_2, color: Theme.of(context).cardColor),
+                                SizedBox(height: 8.0),
+                                Text("Safe", style: TextStyle(color: Theme.of(context).cardColor, fontSize: 12.0))
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              border: Border.all(color: Colors.grey, width: 0.1),
+                              borderRadius: BorderRadius.circular(10.0)
+                            ),
+                          ),
+                        ],
+                      ),
                         ],
                       ),
                   ),

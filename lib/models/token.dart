@@ -1,5 +1,4 @@
 class Token {
-  final String? name;
   final String? symbol;
   final String? address;
   final int decimals;
@@ -9,7 +8,6 @@ class Token {
   var usdBalance;
 
   Token({
-   required this.name,
    required this.symbol,
    required this.address,
    required this.decimals,
@@ -22,7 +20,6 @@ class Token {
     factory Token.fromMap(key, json) {
     return Token(
       address: json['address'],
-      name: json['name'],
       symbol: json['symbol'],
       decimals: json['decimals'],
       image: json['logoUrl'],

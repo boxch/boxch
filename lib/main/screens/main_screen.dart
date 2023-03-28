@@ -56,13 +56,21 @@ class MainScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
                               highlightColor: Colors.transparent,
-                              onTap: () => menuBottomSheet(context),
-                              child: Icon(Iconsax.menu, color: Theme.of(context).hintColor),
+                              onTap: () => replaceWindow(context, SettingsScreen()),
+                              child: Container(
+                                height: 30.0,
+                                width: 30.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.withOpacity(0.1),
+                                ),
+                              ),
                             ),
                             SizedBox(width: 16.0),
                             InkWell(
@@ -75,20 +83,9 @@ class MainScreen extends StatelessWidget {
                                   okCopyToast(context);
                                 });
                               },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(userGreeting(),
-                                      style: TextStyle(
-                                          fontSize: 13.0,
-                                          color: Theme.of(context)
-                                              .hintColor)),
-                                  SizedBox(height: 2.0),
-                                  Text(
+                              child: Text(
                                       "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}  ❐",
                                       style: TextStyle(fontSize: 13.0)),
-                                ],
-                              ),
                             ),
                           ],
                         ),
@@ -229,7 +226,6 @@ class MainScreen extends StatelessWidget {
                                           amount: state.tokens[index].balance!))),
                               image: state.tokens[index].image,
                               title: state.tokens[index].symbol ?? "unknown",
-                              subtitle: state.tokens[index].name ?? "unknown",
                               trailingTitle: state.hideBalanceState
                                   ? '*'
                                   : '${state.tokens[index].balance}',
@@ -314,59 +310,6 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  menuBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      barrierColor: Colors.black.withOpacity(0.5),
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (builder) {
-        return Material(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-          child: Container(
-            height: 160.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0)),
-              color: Theme.of(context).scaffoldBackgroundColor,
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 16.0),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 32.0),
-                  alignment: Alignment.centerLeft,
-                  child: Text("Menu",
-                          style: TextStyle(
-                              fontSize: 16.0, color: Theme.of(context).hintColor)),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MenuItem(onTap: () {}, text: "earnText".tr,
-                       icon: Icon(Iconsax.layer, color: Colors.blue)),
-                      MenuItem(onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
-                        create: (context) => WalletConnectCubit(context),
-                        child: WalletConnectScreen(),
-                      )), 
-                      text: "Connect", icon: Image.asset("assets/images/wallet_connect.png", height: 25.0, width: 25.0)),
-                      MenuItem(onTap: () => replaceWindow(context, SettingsScreen()), text: "settingsText".tr,
-                       icon: Icon(Iconsax.setting, color: Colors.blue))
-                    ],
-                  ),
-                )),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
   receiveBottomSheet(BuildContext context) {
   showModalBottomSheet(

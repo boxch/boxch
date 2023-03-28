@@ -75,12 +75,10 @@ class _ChooseTokensScreenState extends State<ChooseTokensScreen> {
                     onPressed: () => replaceWindow(
                           context,
                           SendScreen(
-                            name: duplicateTokens[index].name ?? "unknown",
                             symbol: duplicateTokens[index].symbol ?? "unknown",
                               address: duplicateTokens[index].address!, tokenBalance: duplicateTokens[index].balance)),
                     image: duplicateTokens[index].image,
                     title: duplicateTokens[index].symbol ?? "unknown",
-                    subtitle: duplicateTokens[index].name ?? "unknown",
                   ); 
                 }))
             ],
@@ -94,7 +92,7 @@ class _ChooseTokensScreenState extends State<ChooseTokensScreen> {
 
   if(query.isNotEmpty) {
     final suggestions = dummySearchList.where((token) {
-      final name = token.name?.toLowerCase();
+      final name = token.symbol?.toLowerCase();
       final input = query.toLowerCase();
       return name!.contains(input);
     });

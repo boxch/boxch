@@ -11,6 +11,8 @@ import 'package:boxch/theme/theme_icons.dart';
 import 'package:boxch/theme/theme_states.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
+import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
+import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,26 +92,40 @@ class SettingsScreen extends StatelessWidget {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
+            Container(
+              height: 120.0,
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              color: Theme.of(context).primaryColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200.0,
+                    child: Text("Mint NFT to get full access to the wallet", style: TextStyle(color: Theme.of(context).cardColor))),
+                  Container(
+                    height: 100.0,
+                    width: 90.0,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(Icons.add, color: Theme.of(context).hintColor),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 32.0),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text("GENERAL",
-                  style: TextStyle(
-                      fontSize: 12.0, color: Theme.of(context).hintColor)),
-            ),
             ListTile(
-              onTap: () => replaceWindow(context, LanguageScreen()),
-              leading: Icon(Iconsax.language_square,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
+                        create: (context) => WalletConnectCubit(context),
+                        child: WalletConnectScreen(),
+                      )),
+              leading: Image.asset("assets/images/wallet_connect.png", height: 25.0, width: 25.0),
               title:
-                  Text('changeLanguage'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
+                  Text('WalletConnect', style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text("SECURITY",
-                  style: TextStyle(
-                      fontSize: 12.0, color: Theme.of(context).hintColor)),
-            ),
+            Divider(),
             ListTile(
               leading: Icon(Iconsax.key,
                   color: Theme.of(context).cardColor, size: 21.0),
@@ -122,6 +138,7 @@ class SettingsScreen extends StatelessWidget {
                     context, InfoScreen(information: current.secretKey));
               },
             ),
+            Divider(),
             ListTile(
               leading: Icon(Iconsax.password_check,
                   color: Theme.of(context).cardColor, size: 21.0),
@@ -131,12 +148,14 @@ class SettingsScreen extends StatelessWidget {
                 replaceWindow(context, ChangePasswordScreen());
               },
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text("EXPERIENCE",
-                  style: TextStyle(
-                      fontSize: 12.0, color: Theme.of(context).hintColor)),
+            ListTile(
+              onTap: () => replaceWindow(context, LanguageScreen()),
+              leading: Icon(Iconsax.language_square,
+                  color: Theme.of(context).cardColor, size: 21.0),
+              title:
+                  Text('changeLanguage'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
             ),
+            Divider(),
             ListTile(
               leading: Icon(Iconsax.star,
                   color: Theme.of(context).cardColor),
@@ -160,12 +179,7 @@ class SettingsScreen extends StatelessWidget {
               onTap: () =>
                   replaceWindow(context, WebviewScreen(urlLink: telegramChat)),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text("OTHERS",
-                  style: TextStyle(
-                      fontSize: 12.0, color: Theme.of(context).hintColor)),
-            ),
+            Divider(),
             ListTile(
               leading: Icon(Iconsax.lock,
                   color: Theme.of(context).cardColor, size: 21.0),
@@ -194,10 +208,10 @@ class SettingsScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(appName, style: TextStyle(fontSize: 16.0, color: Theme.of(context).hintColor)),
+                Text(appName, style: TextStyle(fontSize: 14.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
                 Text(appVersion,
                     style: TextStyle(
-                        fontSize: 12.0, color: Theme.of(context).hintColor)),
+                        fontSize: 10.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
               ],
             ),
           ],

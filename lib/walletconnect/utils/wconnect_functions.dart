@@ -78,7 +78,7 @@ signTransactionDialog(BuildContext context, {required dynamic par}) => showModal
                 children: [
                   Flexible(
                     flex: 10,
-                    child: Text(par.toString().substring(0, 100)))
+                    child: Text(par.toString().substring(0, 1000)))
                 ],
               ),
             ),

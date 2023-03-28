@@ -4,13 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CryptocurrencysListTile extends StatelessWidget {
   final String? image;
   final String title;
-  final String subtitle;
   final onPressed;
 
   const CryptocurrencysListTile(
       {required this.image,
       required this.title,
-      required this.subtitle,
       required this.onPressed})
       : super();
 
@@ -51,7 +49,6 @@ class CryptocurrencysListTile extends StatelessWidget {
                     child: Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(6.0),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0)),
                           child: ClipRRect(
@@ -63,11 +60,7 @@ class CryptocurrencysListTile extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(title, style: TextStyle(fontSize: 16.0)),
-                            Text(subtitle,
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    color: Theme.of(context).hintColor)),
+                            Text(title, style: TextStyle(fontSize: 18.0, color: Theme.of(context).cardColor)),
                           ],
                         )
                       ],

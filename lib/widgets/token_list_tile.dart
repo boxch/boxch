@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class TokenListTile extends StatelessWidget {
   final String? image;
   final String title;
-  final String subtitle;
   final String trailingTitle;
   final String trailingSubtitle;
   final onPressed;
@@ -13,7 +12,6 @@ class TokenListTile extends StatelessWidget {
   const TokenListTile(
       {required this.image,
       required this.title,
-      required this.subtitle,
       required this.trailingTitle,
       required this.trailingSubtitle,
       required this.onPressed,
@@ -40,23 +38,17 @@ class TokenListTile extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
+                              //border: Border.all(color: Colors.grey, width: 0.1),
+                              color: Theme.of(context).primaryColor
                             ),
+                            padding: EdgeInsets.all(4.0),
                             child: ClipRRect(
                             borderRadius: BorderRadius.circular(30.0),
                             child: getImageIcon(image: image, size: 30.0),
                           ),
                           ),
                           SizedBox(width: 12.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(title, style: TextStyle(fontSize: 15.0, color: Theme.of(context).cardColor)),
-                              Text(subtitle,
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      color: Theme.of(context).hintColor)),
-                            ],
-                          ),
+                          Text(title, style: TextStyle(fontSize: 18.0, color: Theme.of(context).cardColor)),
                         ],
                       ),
                     ),

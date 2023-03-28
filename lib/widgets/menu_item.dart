@@ -38,8 +38,6 @@ class _MenuItemState extends State<MenuItem> {
             width: 55.0,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100.0),
-                border: Border.all(
-                color: Theme.of(context).hintColor.withOpacity(0.3), width: 0.5),
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withOpacity(0.01),
@@ -49,7 +47,6 @@ class _MenuItemState extends State<MenuItem> {
             padding: EdgeInsets.all(12.0),
             child: widget.icon,
           ),
-          SizedBox(height: 8.0),
           Text(widget.text,
                 style: TextStyle(color: Theme.of(context).hintColor, fontSize: 9.0))
         ],
