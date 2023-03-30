@@ -13,6 +13,8 @@ import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
 import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
+import 'package:boxch/widgets/mdivider.dart';
+import 'package:boxch/widgets/shell_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,43 +94,20 @@ class SettingsScreen extends StatelessWidget {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            Container(
-              height: 120.0,
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              color: Theme.of(context).primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 200.0,
-                    child: Text("Mint NFT to get full access to the wallet", style: TextStyle(color: Theme.of(context).cardColor))),
-                  Container(
-                    height: 100.0,
-                    width: 90.0,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    alignment: Alignment.center,
-                    child: Icon(Icons.add, color: Theme.of(context).hintColor),
-                  ),
-                ],
-              ),
-            ),
             SizedBox(height: 32.0),
             ListTile(
               onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
                         create: (context) => WalletConnectCubit(context),
                         child: WalletConnectScreen(),
                       )),
-              leading: Image.asset("assets/images/wallet_connect.png", height: 25.0, width: 25.0),
+              leading: ShellContainer(child: Image.asset("assets/images/wallet_connect.png", height: 28.0, width: 28.0)),
               title:
                   Text('WalletConnect', style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
             ),
-            Divider(),
+            Mdivider(),
             ListTile(
-              leading: Icon(Iconsax.key,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              leading: ShellContainer(child: Icon(Iconsax.key5,
+                  color: Theme.of(context).hintColor, size: 21.0)),
               title:
                   Text('privateKeyText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () {
@@ -138,27 +117,28 @@ class SettingsScreen extends StatelessWidget {
                     context, InfoScreen(information: current.secretKey));
               },
             ),
-            Divider(),
+            Mdivider(),
             ListTile(
-              leading: Icon(Iconsax.password_check,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              leading: ShellContainer(child: Icon(Iconsax.password_check5,
+                  color: Theme.of(context).hintColor, size: 21.0)),
               title: Text('changePasswordText'.tr,
                   style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () {
                 replaceWindow(context, ChangePasswordScreen());
               },
             ),
+            SizedBox(height: 8.0),
             ListTile(
               onTap: () => replaceWindow(context, LanguageScreen()),
-              leading: Icon(Iconsax.language_square,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              leading: ShellContainer(child: Icon(Iconsax.global5,
+                  color: Theme.of(context).hintColor, size: 21.0)),
               title:
                   Text('changeLanguage'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
             ),
-            Divider(),
+            SizedBox(height: 8.0),
             ListTile(
-              leading: Icon(Iconsax.star,
-                  color: Theme.of(context).cardColor),
+              leading: ShellContainer(child: Icon(Iconsax.star5,
+                  color: Theme.of(context).hintColor)),
               title:
                   Text('likingBoxchText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async {
@@ -172,17 +152,18 @@ class SettingsScreen extends StatelessWidget {
                 }
               },
             ),
+            SizedBox(height: 8.0),
             ListTile(
-              leading: Icon(Iconsax.message_question,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              leading: ShellContainer(child: Icon(Iconsax.message_question5,
+                  color: Theme.of(context).hintColor, size: 21.0)),
               title: Text('needHelpText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () =>
                   replaceWindow(context, WebviewScreen(urlLink: telegramChat)),
             ),
-            Divider(),
+            Mdivider(),
             ListTile(
-              leading: Icon(Iconsax.lock,
-                  color: Theme.of(context).cardColor, size: 21.0),
+              leading: ShellContainer(child: Icon(Iconsax.lock5,
+                  color: Theme.of(context).hintColor, size: 21.0)),
               title: Text('privacyPolicyText'.tr,
                   style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async => await launchUrl(Uri.parse(privacyPolicy)),
@@ -205,13 +186,22 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Column(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(appName, style: TextStyle(fontSize: 14.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
-                Text(appVersion,
-                    style: TextStyle(
-                        fontSize: 10.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                Image.asset("assets/images/boxch_welcome.png", height: 30.0, width: 30.0),
+                SizedBox(width: 8.0),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(appName, style: TextStyle(fontSize: 14.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                    Text(appVersion,
+                        style: TextStyle(
+                            fontSize: 10.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                  ],
+                ),
               ],
             ),
           ],

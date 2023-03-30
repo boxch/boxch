@@ -5,5 +5,5 @@ enum AppIcon { ligthIcon, darkIcon }
 
 final appicon = {
   AppIcon.ligthIcon: Icon(Iconsax.moon, color: Colors.black),
-  AppIcon.darkIcon: Icon(Iconsax.sun_1, color: Colors.amber),
+  AppIcon.darkIcon: Icon(Iconsax.sun_1, color: Colors.grey),
 };

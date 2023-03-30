@@ -62,7 +62,7 @@ signTransactionDialog(BuildContext context, {required dynamic par}) => showModal
     backgroundColor: Colors.transparent,
     builder: (context) {
       return Container(
-        height: MediaQuery.of(context).size.height / 1.5,
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -73,15 +73,7 @@ signTransactionDialog(BuildContext context, {required dynamic par}) => showModal
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(),
-            SizedBox(
-              child: Column(
-                children: [
-                  Flexible(
-                    flex: 10,
-                    child: Text(par.toString().substring(0, 1000)))
-                ],
-              ),
-            ),
+            SizedBox(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(

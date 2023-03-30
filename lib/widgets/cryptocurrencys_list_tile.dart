@@ -39,7 +39,7 @@ class CryptocurrencysListTile extends StatelessWidget {
             Theme.of(context).scaffoldBackgroundColor),
       onTap: onPressed,
       child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

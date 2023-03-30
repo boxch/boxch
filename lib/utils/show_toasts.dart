@@ -62,7 +62,7 @@ okCopyToast(BuildContext context, {String? message}) {
   showToastWidget(
       Container(
         height: 70.0,
-        width: 70.0,
+        width: 65.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             boxShadow: [
@@ -95,7 +95,7 @@ errorShowToast(BuildContext context, {required String message}) {
   showToastWidget(
       Container(
         height: 70.0,
-        width: 120.0,
+        width: 100.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: Colors.grey[800], borderRadius: BorderRadius.circular(10.0)),
@@ -106,7 +106,7 @@ errorShowToast(BuildContext context, {required String message}) {
             const Icon(Icons.info, size: 32.0, color: Colors.red),
             Text(message,
                 style: TextStyle(
-                    color: Theme.of(context).hintColor, fontSize: 12.0)),
+                    color: Theme.of(context).hintColor, fontSize: 10.0)),
           ],
         ),
       ),

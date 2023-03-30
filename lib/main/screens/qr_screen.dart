@@ -43,7 +43,6 @@ class _QRScreenState extends State<QRScreen> {
       body: Column(
         children: [
           Expanded(
-            flex: 5,
             child: MobileScanner(
             allowDuplicates: false,
             onDetect: (barcode, args) {
@@ -54,11 +53,7 @@ class _QRScreenState extends State<QRScreen> {
                 SendScreen.destinationWallet.text = code;
                 Navigator.pop(context);
               }
-          }),
-          ),
-          Text('scanQrDestinationText'.tr, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
-          SizedBox(
-            height: 16.0,
+            }),
           ),
         ],
       ),

@@ -24,7 +24,7 @@ class Landing extends StatelessWidget {
         builder: (context, state) {
             return OKToast(
               position: ToastPosition.center,
-                child:  MaterialApp(
+                child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: state.ligthTheme
                               ? apptheme[AppTheme.ligth]

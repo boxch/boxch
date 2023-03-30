@@ -1,22 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
-import 'package:boxch/main/screens/settings_screens/info_screen.dart';
 import 'package:boxch/models/token.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
-import 'package:boxch/utils/functions.dart';
 import 'package:boxch/walletconnect/utils/wconnect_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:solana/base58.dart';
-import 'package:solana/dto.dart';
-import 'package:solana/encoder.dart';
 import 'package:solana/solana.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+import 'package:solana_web3/solana_web3.dart' as web3;
 
 class MainCubit extends Cubit<MainStates> {
   MainCubit(BuildContext context) : super(LoadingMainScreenState()) {
@@ -176,6 +171,7 @@ class MainCubit extends Cubit<MainStates> {
         totalBalance: hideBalanceState ? "*,**" : totalBalance,
         hideBalanceState: hideBalanceState));
   }
+  
 
   Future<void> walletConnect(BuildContext context) async {
     wcClient = await Web3Wallet.createInstance(
@@ -193,10 +189,10 @@ class MainCubit extends Cubit<MainStates> {
               var userApproved = await signTransactionDialog(context, par: parametrs);
               if (userApproved) {
                 // Returned value must by a primitive, or a JSON serializable object: Map, List, etc.
-
-                var signature = await wallet.sign(ByteArray.fromString(parametrs['instructions'].toString()));
-
                
+                var trx = web3.Transaction.fromJson(parametrs);
+                var signature = await wallet.sign(trx.serialize());
+
 
                 return {"signature": signature.toBase58()};
 

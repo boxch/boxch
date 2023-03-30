@@ -5,10 +5,9 @@ import 'package:boxch/main/screens/history_transactions_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
-import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
-import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
+import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/main_item.dart';
-import 'package:boxch/widgets/menu_item.dart';
+import 'package:boxch/widgets/mdivider.dart';
 import 'package:flutter/material.dart';
 import 'package:boxch/history/history_cubit.dart';
 import 'package:boxch/utils/constants.dart';
@@ -58,25 +57,21 @@ class MainScreen extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
+                            CustomInkWell(
                               onTap: () => replaceWindow(context, SettingsScreen()),
                               child: Container(
-                                height: 30.0,
-                                width: 30.0,
+                                height: 35.0,
+                                width: 35.0,
+                                alignment: Alignment.center,
+                                child: Icon(Iconsax.menu5, size: 20.0, color: Theme.of(context).hintColor.withOpacity(0.5)),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.grey.withOpacity(0.1),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                             ),
-                            SizedBox(width: 16.0),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
+                            SizedBox(width: 12.0),
+                            CustomInkWell(
                               onTap: () {
                                 Clipboard.setData(ClipboardData(text: address))
                                     .then((result) {
@@ -84,18 +79,33 @@ class MainScreen extends StatelessWidget {
                                 });
                               },
                               child: Text(
-                                      "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}  ❐",
-                                      style: TextStyle(fontSize: 13.0)),
+                                      "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}",
+                                      style: TextStyle(fontSize: 13.0, color: Theme.of(context).cardColor)),
                             ),
                           ],
                         ),
-                        SizedBox(),
+                        CustomInkWell(
+                              onTap: () {
+                                
+                              },
+                              child: Container(
+                                height: 35.0,
+                                width: 35.0,
+                                alignment: Alignment.center,
+                                child: Icon(Iconsax.notification5, size: 20.0, color: Theme.of(context).hintColor.withOpacity(0.5)),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
                       ],
                     )
                   ]),
                   bottom: PreferredSize(
                     preferredSize: Size.fromHeight(220.0),
-                    child: Column(children: [
+                    child: Column(
+                      children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Container(
@@ -204,10 +214,27 @@ class MainScreen extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child:
-                            Text('assetsText'.tr, style: TextStyle(fontSize: 16.0, color: Theme.of(context).cardColor)),
+                            Text('tokensText'.tr, style: TextStyle(fontSize: 16.0, color: Theme.of(context).cardColor)),
                       ),
                       SizedBox(height: 8.0),
-                      Expanded(
+                      state.tokens.isEmpty 
+                      ? Container(
+                        height: 160.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset("assets/images/cryptos.png", height: 70.0, width: 70.0),
+                            SizedBox(height: 16.0),
+                            Text("Your tokens will appear here", style: TextStyle(color: Theme.of(context).hintColor)),
+                            SizedBox(height: 16.0),
+                            CustomInkWell(
+                              onTap: () => tradingMethods(context),
+                              child: Text("Buy crypto", style: TextStyle(color: Colors.amber)))
+                          ],
+                        ),
+                      ) 
+                      : Expanded(
                           child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: state.tokens.length,
@@ -234,13 +261,7 @@ class MainScreen extends StatelessWidget {
                                   : '\$${state.tokens[index].usdBalance}');
                         },
                       )),
-                      Container(
-                        height: 70.0,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          border: Border.fromBorderSide(BorderSide(strokeAlign: 1, color: Theme.of(context).primaryColor, width: 1.0))
-                        ),
-                      ),
+                      Mdivider(),
                     ],
                   ),
                 ),

@@ -12,23 +12,26 @@ class SolanaNetwork {
   
    static Future loadBalance({required Map tokens}) async {
     List<Token> _balance = [];
-    
+
     final ProgramAccountsResult tokenAccountsByOwner = await mainnetSolanaClient.rpcClient.getTokenAccountsByOwner(wallet.address, TokenAccountsFilter.byProgramId(TokenProgram.programId), encoding: Encoding.jsonParsed, commitment: Commitment.processed);
-    
+
     var solBalance = await mainnetSolanaClient.rpcClient.getBalance(wallet.address);
-    _balance.add(Token(
-    symbol: "SOL", 
-    address: SOL, 
-    decimals: 9, 
-    balance: (solBalance.value / pow(10, 9)).toString(),
-    image: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png"));
+    if (solBalance.value > 0) {
+          _balance.add(Token(
+            symbol: "SOL", 
+            address: SOL, 
+            decimals: 9, 
+            balance: (solBalance.value / pow(10, 9)).toString(),
+            image: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png"));
+    }
 
     for (var element in tokenAccountsByOwner.value) { 
       final data = element.account.data as ParsedAccountData;
       var programData = data as ParsedSplTokenProgramAccountData;
       final parsed = programData.parsed as TokenAccountData;
 
-      if (tokens[parsed.info.mint] != null) {
+      if (double.parse(parsed.info.tokenAmount.amount)  > 0) {
+              if (tokens[parsed.info.mint] != null) {
         _balance.add(Token(
                 price: "0.0",
                 symbol: tokens[parsed.info.mint]!['symbol'],
@@ -46,6 +49,7 @@ class SolanaNetwork {
                 image: null,
                 balance: parsed.info.tokenAmount.uiAmountString!
                 ));
+      }
       }
     }
 

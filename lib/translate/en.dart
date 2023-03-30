@@ -13,7 +13,7 @@ final Map<String, String> languageUS = {
       'pasteText': 'paste',
       'depositText': 'Receive',
       'sendTokensText': 'Send',
-      'assetsText': 'Tokens',
+      'tokensText': 'Tokens',
       'inputAddressWith': 'Recipient address',
       'inputSumText': 'Input amount',
       'closeText': 'Close',
