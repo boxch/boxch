@@ -234,7 +234,8 @@ class MainScreen extends StatelessWidget {
                           ],
                         ),
                       ) 
-                      : Expanded(
+                      : Container(
+                          height: state.tokens.length * 60,
                           child: ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemCount: state.tokens.length,

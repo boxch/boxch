@@ -43,7 +43,7 @@ void main() async {
 
   if (Hive.box(walletBox).isNotEmpty) {
     final LocalWallet current = Hive.box(walletBox).get(boxCurrentWalletKey);
-    wallet = await Wallet.fromPrivateKeyBytes(privateKey: base58decode(current.secretKey));
+    wallet = await Wallet.fromMnemonic(current.secretKey);
   }
 
   runApp(BlocProvider<ThemeCubit>(

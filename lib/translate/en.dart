@@ -41,6 +41,7 @@ final Map<String, String> languageUS = {
       'needHelpText': "Need help?",
       'privacyPolicyText': "Privacy policy",
       'changeTheme': 'Change theme',
+      'biometricAuthText': 'Biometric auth',
 
       'goodMorning': 'Good morning,',
       'goodAfternoon': 'Good afternoon,',

@@ -9,6 +9,8 @@ class AuthCubit extends Cubit<AuthStates> {
   AuthCubit({initialState}) : super(Hive.box(boxPassword).isNotEmpty
             ? EnterPasswordState(error: false)
             : CreatePasswordState(message: "Enter a new password")) {
+              if (Hive.box(mainBox).get(boxBiometricKey) == null || 
+              Hive.box(mainBox).get(boxBiometricKey) == true)
               biometricAuth();
             }
 

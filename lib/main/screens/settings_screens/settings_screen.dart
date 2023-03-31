@@ -13,6 +13,7 @@ import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
 import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
+import 'package:boxch/widgets/custom_switch.dart';
 import 'package:boxch/widgets/mdivider.dart';
 import 'package:boxch/widgets/shell_container.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,17 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController historyCount = TextEditingController();
+
   final TextEditingController password = TextEditingController();
+
+  bool _enable = Hive.box(mainBox).get(boxBiometricKey) ?? true;
 
   exitDialog(BuildContext context) => showDialog(
       context: context,
@@ -126,6 +135,21 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 replaceWindow(context, ChangePasswordScreen());
               },
+            ),
+            SizedBox(height: 8.0),
+            ListTile(
+              leading: ShellContainer(child: Icon(Iconsax.finger_scan,
+                  color: Theme.of(context).hintColor, size: 21.0)),
+              title: Text('biometricAuthText'.tr,
+                  style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
+              trailing: CustomSwitch(
+                  value: _enable,
+                  onChanged: (bool val) async {
+                        _enable = val;
+                        await Hive.box(mainBox).put(boxBiometricKey, val);
+                      setState(() {});
+                  },
+                ),
             ),
             SizedBox(height: 8.0),
             ListTile(

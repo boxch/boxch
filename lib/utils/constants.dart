@@ -3,6 +3,7 @@ const String boxThemeKey = "boxThemeKey";
 const String boxLanguageKey = "boxLanguageKey";
 const String boxP2PCurrency = "boxP2PCurrency";
 const String boxHideKey = "boxHideKey";
+const String boxBiometricKey = "boxBiometricHideKey";
 
 
 const String boxPassword = "boxPassword";
