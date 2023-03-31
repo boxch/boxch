@@ -1,6 +1,9 @@
 import 'package:boxch/start/cubit/start_cubit.dart';
+import 'package:boxch/utils/show_toasts.dart';
+import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/mnemonic_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -54,26 +57,17 @@ class CreateWalletScreen extends StatelessWidget {
                     MnemonicWidget(mnemonic: mnemonic),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Iconsax.camera_slash, color: Theme.of(context).hintColor),
-                                SizedBox(width: 8.0),
-                                Text("Don't take a screenshot"),
-                              ],
-                            ),
-                            SizedBox(height: 32.0),
-                            Row(
-                              children: [
-                                Icon(Iconsax.message_edit, color: Theme.of(context).hintColor),
-                                SizedBox(width: 8.0),
-                                Text("Write down on paper"),
-                              ],
-                            )
-                          ],
+                      child: CustomInkWell(
+                        onTap: () => Clipboard.setData(ClipboardData(text: mnemonic)),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.copy, size: 16.0, color: Theme.of(context).cardColor),
+                              SizedBox(width: 8.0),
+                              Text("Copy to clipboard", style: TextStyle(color: Theme.of(context).cardColor)),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -84,12 +78,10 @@ class CreateWalletScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
                               child: InkWell(
                             onTap: () async {
-                                await _cubit.signInCreateWallet(
-                                      keyState: false,
-                                      mnemonic: mnemonic);
+                                await _cubit.signInCreateWallet(mnemonic: mnemonic);
                               },
                             child: Container(
-                                height: 55.0,
+                                height: 50.0,
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Row(

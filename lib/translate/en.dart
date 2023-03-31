@@ -1,8 +1,8 @@
 final Map<String, String> languageUS = {
       'totalBalanceText': 'Total balance',
       'chooseCryptocurrency': 'Choose a cryptocurrency',
-      'createWalletButtonText': 'Create wallet',
-      'importWalletButtonText': 'Import wallet',
+      'createWalletButtonText': 'Create new wallet',
+      'importWalletButtonText': 'I already have a wallet',
       'createWalletScreenText': 'Save mnemonic in a safe place',
       'copySeedShowToast': 'Mnemonic copied',
       'backText': 'Back',
