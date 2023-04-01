@@ -3,6 +3,7 @@ import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:rive/rive.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({ Key? key }) : super(key: key);
@@ -20,6 +21,8 @@ class StartScreen extends StatelessWidget {
               body: Stack(
                 alignment: Alignment.center,
                 children: [
+                  Expanded(
+                    child: RiveAnimation.asset("assets/back_anim.riv")),
                   // Container(
                   //     padding: EdgeInsets.symmetric(vertical: 100.0),
                   //     alignment: Alignment.topCenter,
