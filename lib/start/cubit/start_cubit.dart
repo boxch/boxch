@@ -5,7 +5,6 @@ import 'package:boxch/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:solana/base58.dart';
 import 'package:solana/solana.dart';
 import 'package:bip39/bip39.dart' as bip39;
 

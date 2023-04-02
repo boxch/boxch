@@ -1,5 +1,4 @@
 import 'package:boxch/start/cubit/start_cubit.dart';
-import 'package:boxch/utils/show_toasts.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/mnemonic_widget.dart';
 import 'package:flutter/material.dart';

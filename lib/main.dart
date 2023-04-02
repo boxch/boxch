@@ -6,7 +6,6 @@ import 'package:boxch/utils/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:solana/base58.dart';
 import 'package:solana/solana.dart';
 import 'utils/config.dart';
 import 'package:boxch/translate/locale_string.dart';

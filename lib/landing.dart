@@ -1,5 +1,4 @@
 import 'package:boxch/auth/cubit/auth_cubit.dart';
-import 'package:boxch/auth/screens/enter_password_screen.dart';
 import 'package:boxch/auth/screens/password_screen.dart';
 import 'package:boxch/theme/theme_cubit.dart';
 import 'package:boxch/theme/theme_states.dart';

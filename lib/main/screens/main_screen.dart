@@ -2,10 +2,12 @@ import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/history_transactions_screen.dart';
+import 'package:boxch/main/screens/notifications_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
+import 'package:boxch/widgets/custom_shimmer.dart';
 import 'package:boxch/widgets/main_item.dart';
 import 'package:boxch/widgets/mdivider.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,149 @@ class MainScreen extends StatelessWidget {
     return BlocBuilder<MainCubit, MainStates>(
       builder: (context, state) {
         if (state is LoadingMainScreenState) {
-          return Center(child: CircularProgressIndicator());
+          return Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(150.0),
+              child: Container(
+                height: 140.0,
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        CustomShimmer(
+                          radius: 50.0,
+                          child: Container(
+                            height: 35.0,
+                            width: 35.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                        CustomShimmer(
+                          radius: 20.0,
+                          child: Container(
+                            height: 25.0,
+                            width: 120.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0)
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    CustomShimmer(
+                      radius: 50.0,
+                      child: Container(
+                        height: 35.0,
+                        width: 35.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomShimmer(
+                            child: Container(
+                              height: 20.0,
+                              width: 90.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.0),
+                          CustomShimmer(
+                            radius: 5.0,
+                            child: Container(
+                              height: 45.0,
+                              width: 120.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 70.0,
+                        width: 50.0,
+                        alignment: Alignment.topLeft,
+                        child: CustomShimmer(
+                          radius: 50.0,
+                          child: Container(
+                            height: 25.0,
+                            width: 30.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 26.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      height: 65.0,
+                      width: 65.0,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.circle
+                      ),
+                    ),
+                    Container(
+                      height: 65.0,
+                      width: 65.0,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.circle
+                      ),
+                    ),
+                    Container(
+                      height: 65.0,
+                      width: 65.0,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.circle
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 32.0),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Container(
+                      height: 20.0,
+                      width: 50.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
+                ),)
+              ],
+            )
+          );
         }
 
         if (state is MainScreenState) {
@@ -85,9 +229,7 @@ class MainScreen extends StatelessWidget {
                           ],
                         ),
                         CustomInkWell(
-                              onTap: () {
-                                
-                              },
+                              onTap: () => replaceWindow(context, NotificationsScreen()),
                               child: Container(
                                 height: 35.0,
                                 width: 35.0,
@@ -286,7 +428,7 @@ class MainScreen extends StatelessWidget {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
           child: Container(
-            height: 160.0,
+            height: 180.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
@@ -321,6 +463,11 @@ class MainScreen extends StatelessWidget {
                         leading: Image.asset("assets/images/onramper.png",
                             height: 40.0, width: 40.0),
                       ),
+                      Mdivider(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text("If this method does not suit you, buy cryptocurrency on the exchange Binance, OKEX, Kucoin etc. We are already working on adding other payment methods.", style: TextStyle(fontSize: 9.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                      )
                     ],
                   ),
                 )),

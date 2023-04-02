@@ -14,14 +14,12 @@ class StartScreen extends StatelessWidget {
     return BlocProvider<StartCubit>(
       create: (context) => StartCubit(),
       child: Scaffold(
-              appBar: AppBar(
-                elevation: 0.0,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              ),
               body: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Expanded(
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
                     child: RiveAnimation.asset("assets/back_anim.riv")),
                   // Container(
                   //     padding: EdgeInsets.symmetric(vertical: 100.0),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:oktoast/oktoast.dart';
 
 class InfoScreen extends StatelessWidget {
   final String information;
