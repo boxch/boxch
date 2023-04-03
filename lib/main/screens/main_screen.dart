@@ -6,6 +6,7 @@ import 'package:boxch/main/screens/notifications_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
+import 'package:boxch/widgets/academy_widget.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/custom_shimmer.dart';
 import 'package:boxch/widgets/main_item.dart';
@@ -18,6 +19,7 @@ import 'package:boxch/utils/show_toasts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxch/widgets/token_list_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
@@ -184,7 +186,6 @@ class MainScreen extends StatelessWidget {
           return Material(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: NestedScrollView(
-              
             headerSliverBuilder: (context, value) {
               return [
                 SliverAppBar(
@@ -338,7 +339,6 @@ class MainScreen extends StatelessWidget {
               ];
             },
             body: RefreshIndicator(
-              displacement: 5.0,
               color: Colors.grey,
               backgroundColor: Theme.of(context).primaryColor.withOpacity(0.5),
               onRefresh: () async => await cubit.refreshMain(),
@@ -360,51 +360,110 @@ class MainScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8.0),
                       state.tokens.isEmpty 
-                      ? Container(
-                        height: 160.0,
-                        width: MediaQuery.of(context).size.width,
+                      ? Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset("assets/images/cryptos.png", height: 70.0, width: 70.0),
-                            SizedBox(height: 16.0),
-                            Text("Your tokens will appear here", style: TextStyle(color: Theme.of(context).hintColor)),
-                            SizedBox(height: 16.0),
-                            CustomInkWell(
-                              onTap: () => tradingMethods(context),
-                              child: Text("Buy crypto", style: TextStyle(color: Colors.amber)))
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: 8.0),
+                                Image.asset("assets/images/cryptos.png", height: 70.0, width: 70.0),
+                                SizedBox(height: 16.0),
+                                Text("Your tokens will appear here", style: TextStyle(color: Theme.of(context).hintColor)),
+                                SizedBox(height: 16.0),
+                                CustomInkWell(
+                                  onTap: () => tradingMethods(context),
+                                  child: Text("Buy crypto", style: TextStyle(color: Colors.amber))),
+                              SizedBox(height: 16.0),
+                              Mdivider(),
+                              Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text('academyText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor))),
+                          ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Container(
+                                height: 120.0,
+                                child: ListView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16.0, right: 8.0),
+                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/89c16104f3eb476e85fd858e5f24ca0b.png"),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/934ba45d2e6948048b71c4592fad02b3.png"),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/934ba45d2e6948048b71c4592fad02b3.png"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                              ],
+                            ),
+                          ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Container(
+                                height: 50.0,
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                decoration: BoxDecoration(
+                                  //border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                                  gradient: LinearGradient(colors: [Theme.of(context).colorScheme.onPrimary.withOpacity(0.5), Theme.of(context).primaryColor.withOpacity(0.5),]),
+                                  borderRadius: BorderRadius.circular(50.0)
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("To get free cryptocurrency invite a friend", style: TextStyle(color: Theme.of(context).cardColor, fontSize: 12.0)),
+                                    SvgPicture.asset("assets/icons/users.svg", height: 25.0, width: 25.0),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ) 
-                      : Container(
-                          height: state.tokens.length * 60,
-                          child: ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: state.tokens.length,
-                        itemBuilder: (context, index) {
-                          return TokenListTile(
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              onPressed: () => replaceWindow(
-                                  context,
-                                  BlocProvider<HistoryCubit>(
-                                      create: (context) => HistoryCubit(
-                                          state: state.tokens[index].address),
-                                      child: HistoryTransactionsScreen(
-                                          mint: state.tokens[index].address!,
-                                          balance: state.tokens[index].usdBalance,
-                                          amount: state.tokens[index].balance!))),
-                              image: state.tokens[index].image,
-                              title: state.tokens[index].symbol ?? "unknown",
-                              trailingTitle: state.hideBalanceState
-                                  ? '*'
-                                  : '${state.tokens[index].balance}',
-                              trailingSubtitle: state.hideBalanceState
-                                  ? '-'
-                                  : '\$${state.tokens[index].usdBalance}');
-                        },
-                      )),
-                      Mdivider(),
+                      : Expanded(
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: state.tokens.length,
+                          itemBuilder: (context, index) {
+                        return TokenListTile(
+                            backgroundColor:
+                                Theme.of(context).scaffoldBackgroundColor,
+                            onPressed: () => replaceWindow(
+                                context,
+                                BlocProvider<HistoryCubit>(
+                                    create: (context) => HistoryCubit(
+                                        state: state.tokens[index].address),
+                                    child: HistoryTransactionsScreen(
+                                        mint: state.tokens[index].address!,
+                                        balance: state.tokens[index].usdBalance,
+                                        amount: state.tokens[index].balance!))),
+                            image: state.tokens[index].image,
+                            title: state.tokens[index].symbol ?? "unknown",
+                            trailingTitle: state.hideBalanceState
+                                ? '*'
+                                : '${state.tokens[index].balance}',
+                            trailingSubtitle: state.hideBalanceState
+                                ? '-'
+                                : '\$${state.tokens[index].usdBalance}');
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

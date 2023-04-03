@@ -38,7 +38,7 @@ final apptheme = {
       primaryColor: Color.fromARGB(255, 24, 30, 37),
       hintColor: Colors.grey, 
       colorScheme: ColorScheme.fromSwatch().copyWith(
-        onPrimary: Color.fromARGB(255, 24, 112, 184),
+        onPrimary: Color.fromARGB(255, 35, 44, 54),
         background: Color.fromARGB(255, 30, 87, 79),
         primary: Colors.white,
         brightness: Brightness.dark,

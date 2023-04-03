@@ -57,7 +57,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/boxch_logo.png"
+  image_path: "assets/images/boxch_logo.png"
 
 
 flutter:
@@ -68,8 +68,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/icon/
-    - assets/blockchains/
+    - assets/icons/
 
 
 
