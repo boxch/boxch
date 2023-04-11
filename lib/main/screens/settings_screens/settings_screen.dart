@@ -19,6 +19,7 @@ import 'package:boxch/widgets/shell_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -124,6 +125,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 final LocalWallet current = box.get(boxCurrentWalletKey);
                 replaceWindow(
                     context, InfoScreen(information: current.secretKey));
+              },
+            ),
+            Mdivider(),
+            ListTile(
+              leading: ShellContainer(child: SvgPicture.asset("assets/icons/users.svg", height: 21.0, width: 21.0)),
+              title:
+                  Text('referralProgramText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
+              onTap: () {
+                
+
               },
             ),
             Mdivider(),

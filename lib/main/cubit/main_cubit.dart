@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
 import 'package:boxch/models/token.dart';
+import 'package:boxch/services/notchain_api.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/walletconnect/utils/wconnect_functions.dart';
@@ -58,8 +60,10 @@ class MainCubit extends Cubit<MainStates> {
       totalBalance += usd;
     });
 
+
     if (state is MainScreenState || state is LoadingMainScreenState) {
       emit(MainScreenState(
+          tutorial: balance.isEmpty ? await NotChainApi.getTutorial() : null,
           tokens: balance,
           totalBalance: hideBalanceState ? "*,**" : totalBalance,
           hideBalanceState: hideBalanceState));
@@ -194,7 +198,7 @@ class MainCubit extends Cubit<MainStates> {
                 var signature = await wallet.sign(trx.serialize());
 
 
-                return {"signature": signature.toBase58()};
+                return json.encode({"signature": signature.toBase58()});
 
               } else {
                 throw Errors.getSdkError(Errors.USER_REJECTED_SIGN);
@@ -217,4 +221,6 @@ class MainCubit extends Cubit<MainStates> {
       }
     });
   }
+
+  
 }

@@ -42,7 +42,7 @@ final Map<String, String> languageUS = {
       'privacyPolicyText': "Privacy policy",
       'changeTheme': 'Change theme',
       'biometricAuthText': 'Biometric auth',
-      'academyText': 'Academy',
+      'tutorialText': 'Tutorial',
 
       'goodMorning': 'Good morning,',
       'goodAfternoon': 'Good afternoon,',
@@ -61,5 +61,9 @@ final Map<String, String> languageUS = {
       'loginTermsText': 'I read this and agree ',
       'changePasswordText': 'Change password',
       'inputPasswordText': 'Input password',
-      'resetPasswordText': 'Forgot password'
+      'resetPasswordText': 'Forgot password',
+      'referralProgramText': 'Referral program',
+      'yourTokensWillAppearHereText': 'Your tokens will appear here',
+      'buyCryptoText': 'Buy crypto',
+      'inviteFriendText': 'To get free cryptocurrency invite a friend',
     };

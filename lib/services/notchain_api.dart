@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:boxch/models/articles.dart';
 import 'package:http/http.dart' as http;
 
 class NotChainApi {
 
-  Future<double> getTokenPrice({required String symbol}) async {
+  static Future<double> getTokenPrice({required String symbol}) async {
     var url = Uri.parse("https://price.jup.ag/v1/price?id=$symbol");
 
     try {
@@ -21,7 +22,7 @@ class NotChainApi {
   }
 
 
-  Future getSignatureInfo({required String txHash}) async {
+  static Future getSignatureInfo({required String txHash}) async {
     var url = Uri.parse("https://public-api.solscan.io/transaction/$txHash");
     var response = await http.get(url);
     Map decodeJson = json.decode(response.body);
@@ -32,4 +33,20 @@ class NotChainApi {
     return list;
   }
 
+  static Future<List<Article>> getTutorial() async {
+      final Uri uri = Uri.parse("https://boxch-academy-default-rtdb.europe-west1.firebasedatabase.app/articles.json");
+      var response = await http.get(uri);
+      List jsonDecode = json.decode(response.body);
+      List<Article> tutorialArticles = [];
+
+      var list = jsonDecode.map((json) => Article.fromJson(json)).toList();
+
+      list.forEach((element) { 
+        if (element.tag == "begginer") {
+          tutorialArticles.add(element);
+        }
+      });
+
+      return tutorialArticles;
+    }
 }

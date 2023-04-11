@@ -14,9 +14,10 @@ Boxch Wallet Prototype supports a number features such as:
 * Nice UI
 
 Further development:
+* Send&Receive
 * Improving security
-* Buy&Sell crypto
-* Earn tokens
+* Buy crypto
+* Connect Dapps
 
 # Build
 

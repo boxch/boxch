@@ -3,6 +3,7 @@ import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/history_transactions_screen.dart';
 import 'package:boxch/main/screens/notifications_screen.dart';
+import 'package:boxch/main/screens/read_article_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
@@ -372,11 +373,11 @@ class MainScreen extends StatelessWidget {
                                 SizedBox(height: 8.0),
                                 Image.asset("assets/images/cryptos.png", height: 70.0, width: 70.0),
                                 SizedBox(height: 16.0),
-                                Text("Your tokens will appear here", style: TextStyle(color: Theme.of(context).hintColor)),
+                                Text("yourTokensWillAppearHereText".tr, style: TextStyle(color: Theme.of(context).hintColor)),
                                 SizedBox(height: 16.0),
                                 CustomInkWell(
                                   onTap: () => tradingMethods(context),
-                                  child: Text("Buy crypto", style: TextStyle(color: Colors.amber))),
+                                  child: Text("buyCryptoText".tr, style: TextStyle(color: Colors.amber))),
                               SizedBox(height: 16.0),
                               Mdivider(),
                               Padding(
@@ -384,29 +385,19 @@ class MainScreen extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.centerLeft,
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text('academyText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor))),
+                              child: Text('tutorialText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor))),
                           ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Container(
                                 height: 120.0,
-                                child: ListView(
+                                child: ListView.builder(
                                   physics: BouncingScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 16.0, right: 8.0),
-                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/89c16104f3eb476e85fd858e5f24ca0b.png"),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/934ba45d2e6948048b71c4592fad02b3.png"),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                      child: AcademyWidget(imageUrl: "https://public.bnbstatic.com/static/academy/uploads-original/934ba45d2e6948048b71c4592fad02b3.png"),
-                                    ),
-                                  ],
+                                  itemCount: state.tutorial!.length,
+                                  itemBuilder: (context, index) {
+                                    return AcademyWidget(article: state.tutorial![index], onTap: () => replaceWindow(context, ReadArticleScreen(article: state.tutorial![index],)));
+                                  },
                                 ),
                               ),
                             ),
@@ -427,7 +418,7 @@ class MainScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text("To get free cryptocurrency invite a friend", style: TextStyle(color: Theme.of(context).cardColor, fontSize: 12.0)),
+                                    Text("inviteFriendText".tr, style: TextStyle(color: Theme.of(context).cardColor, fontSize: 12.0)),
                                     SvgPicture.asset("assets/icons/users.svg", height: 25.0, width: 25.0),
                                   ],
                                 ),
@@ -518,7 +509,7 @@ class MainScreen extends StatelessWidget {
                                     "https://buy.onramper.com/?wallets=SOL:${wallet.address}&API_KEY=pk_prod_puiFMHyFkJpStdWO1jV2HtmhMk37Esi4oeBmB0BxNAY0&defaultCrypto=SOL")),
                         title: Text("OnRamper"),
                         subtitle:
-                            Text("Creadit/Debit card", style: TextStyle(fontSize: 11.0)),
+                            Text("Aggregator of cryptocurrency payment services", style: TextStyle(fontSize: 11.0)),
                         leading: Image.asset("assets/images/onramper.png",
                             height: 40.0, width: 40.0),
                       ),
