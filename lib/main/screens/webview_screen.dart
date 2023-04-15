@@ -12,7 +12,6 @@ class WebviewScreen extends StatefulWidget {
 }
 
 class _WebviewScreenState extends State<WebviewScreen> {
-  int loading = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class _WebviewScreenState extends State<WebviewScreen> {
           color: Theme.of(context).scaffoldBackgroundColor,
           height: 80.0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
@@ -34,27 +33,16 @@ class _WebviewScreenState extends State<WebviewScreen> {
                 icon: Icon(Iconsax.arrow_left, color: Theme.of(context).hintColor),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  focusColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  icon: Icon(Icons.close_rounded, color: Theme.of(context).hintColor)),
             ],
           ),
         ),
       ),
       body: Stack(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         children: [
           WebView(
             initialCookies: [],
             initialUrl: widget.urlLink.toString(),
-            onProgress: (state) {
-              setState(() {
-                loading = state;
-              });
-            },
             javascriptMode: JavascriptMode.unrestricted,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             navigationDelegate: (NavigationRequest request) async {
@@ -67,12 +55,7 @@ class _WebviewScreenState extends State<WebviewScreen> {
               }
             },
           ),
-        (loading != 100) ? Container(
-            height: 25.0,
-            width: 25.0,
-            child: CircularProgressIndicator(
-                color:Colors.grey),
-          ) : SizedBox()
+        SizedBox()
         ],
       ),
     );

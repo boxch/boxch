@@ -19,7 +19,6 @@ import 'package:boxch/widgets/shell_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -129,16 +128,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             Mdivider(),
             ListTile(
-              leading: ShellContainer(child: SvgPicture.asset("assets/icons/users.svg", height: 21.0, width: 21.0)),
-              title:
-                  Text('referralProgramText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
-              onTap: () {
-                
-
-              },
-            ),
-            Mdivider(),
-            ListTile(
               leading: ShellContainer(child: Icon(Iconsax.password_check5,
                   color: Theme.of(context).hintColor, size: 21.0)),
               title: Text('changePasswordText'.tr,
@@ -178,12 +167,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text('likingBoxchText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async {
                 if (Platform.isIOS) {
-                  replaceWindow(context, WebviewScreen(urlLink: appInAppStore));
+                  await launchUrl(Uri.parse(appInAppStore));
                 }
 
                 if (Platform.isAndroid) {
-                  replaceWindow(
-                      context, WebviewScreen(urlLink: appInGooglePlay));
+                  await launchUrl(Uri.parse(appInGooglePlay));
                 }
               },
             ),
@@ -221,24 +209,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/boxch_welcome.png", height: 30.0, width: 30.0),
-                SizedBox(width: 8.0),
-                Column(
+            Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(appName, style: TextStyle(fontSize: 14.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                    Text(appName, style: TextStyle(fontSize: 12.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
                     Text(appVersion,
                         style: TextStyle(
-                            fontSize: 10.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                            fontSize: 8.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
                   ],
                 ),
-              ],
-            ),
           ],
         ),
       ),

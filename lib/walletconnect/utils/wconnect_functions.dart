@@ -57,7 +57,8 @@ connectDappDialog(BuildContext context, {required SessionProposalEvent args}) =>
       );
     });
 
-signTransactionDialog(BuildContext context, {required dynamic par}) => showModalBottomSheet(
+
+signTransactionDialog(BuildContext context, {required title, required dynamic par}) => showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     builder: (context) {
@@ -72,7 +73,9 @@ signTransactionDialog(BuildContext context, {required dynamic par}) => showModal
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(),
+            SizedBox(
+              child: Center(child: Text(title)),
+            ),
             SizedBox(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -98,7 +101,7 @@ signTransactionDialog(BuildContext context, {required dynamic par}) => showModal
                       height: 50.0,
                       width: 150.0,
                       alignment: Alignment.center,
-                      child: Text("Sign"),
+                      child: Text("Accept"),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5.0),
                         color: Colors.blue

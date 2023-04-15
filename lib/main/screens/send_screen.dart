@@ -170,7 +170,7 @@ class _SendScreenState extends State<SendScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(
-                                            "assets/blockchains/solana.svg",
+                                            "assets/icons/solana.svg",
                                             height: 25.0,
                                             width: 25.0),
                                         SizedBox(width: 8.0),

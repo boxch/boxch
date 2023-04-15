@@ -2,16 +2,14 @@ import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/history_transactions_screen.dart';
-import 'package:boxch/main/screens/notifications_screen.dart';
-import 'package:boxch/main/screens/read_article_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
-import 'package:boxch/widgets/academy_widget.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/custom_shimmer.dart';
 import 'package:boxch/widgets/main_item.dart';
 import 'package:boxch/widgets/mdivider.dart';
+import 'package:boxch/widgets/notification_button.dart';
 import 'package:flutter/material.dart';
 import 'package:boxch/history/history_cubit.dart';
 import 'package:boxch/utils/constants.dart';
@@ -20,7 +18,6 @@ import 'package:boxch/utils/show_toasts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxch/widgets/token_list_tile.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
@@ -28,17 +25,16 @@ import 'package:countup/countup.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({Key? key }) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   final String address = Hive.box(walletBox).get(boxCurrentWalletKey).publicKey;
 
   @override
   Widget build(BuildContext context) {
     final MainCubit cubit = context.read<MainCubit>();
-    return BlocBuilder<MainCubit, MainStates>(
-      builder: (context, state) {
-        if (state is LoadingMainScreenState) {
-          return Scaffold(
+    return BlocBuilder<MainCubit, MainStates>(builder: (context, state) {
+      if (state is LoadingMainScreenState) {
+        return Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(150.0),
               child: Container(
@@ -67,8 +63,7 @@ class MainScreen extends StatelessWidget {
                             height: 25.0,
                             width: 120.0,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0)
-                            ),
+                                borderRadius: BorderRadius.circular(20.0)),
                           ),
                         )
                       ],
@@ -128,9 +123,7 @@ class MainScreen extends StatelessWidget {
                           child: Container(
                             height: 25.0,
                             width: 30.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle
-                            ),
+                            decoration: BoxDecoration(shape: BoxShape.circle),
                           ),
                         ),
                       )
@@ -145,48 +138,46 @@ class MainScreen extends StatelessWidget {
                       height: 65.0,
                       width: 65.0,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle
-                      ),
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle),
                     ),
                     Container(
                       height: 65.0,
                       width: 65.0,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle
-                      ),
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle),
                     ),
                     Container(
                       height: 65.0,
                       width: 65.0,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        shape: BoxShape.circle
-                      ),
+                          color: Theme.of(context).primaryColor,
+                          shape: BoxShape.circle),
                     ),
                   ],
                 ),
                 SizedBox(height: 32.0),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 20.0,
-                      width: 50.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
-                ),)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 20.0,
+                        width: 50.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
+                )
               ],
-            )
-          );
-        }
+            ));
+      }
 
-        if (state is MainScreenState) {
-          return Material(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: NestedScrollView(
+      if (state is MainScreenState) {
+        return Material(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: NestedScrollView(
             headerSliverBuilder: (context, value) {
               return [
                 SliverAppBar(
@@ -204,12 +195,17 @@ class MainScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomInkWell(
-                              onTap: () => replaceWindow(context, SettingsScreen()),
+                              onTap: () =>
+                                  replaceWindow(context, SettingsScreen()),
                               child: Container(
                                 height: 35.0,
                                 width: 35.0,
                                 alignment: Alignment.center,
-                                child: Icon(Iconsax.menu5, size: 20.0, color: Theme.of(context).hintColor.withOpacity(0.5)),
+                                child: Icon(Iconsax.menu5,
+                                    size: 20.0,
+                                    color: Theme.of(context)
+                                        .hintColor
+                                        .withOpacity(0.5)),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Theme.of(context).primaryColor,
@@ -225,31 +221,20 @@ class MainScreen extends StatelessWidget {
                                 });
                               },
                               child: Text(
-                                      "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}",
-                                      style: TextStyle(fontSize: 13.0, color: Theme.of(context).cardColor)),
+                                  "${address.substring(0, 4)}. . .${address.substring(address.length - 7, address.length)}",
+                                  style: TextStyle(
+                                      fontSize: 13.0,
+                                      color: Theme.of(context).cardColor)),
                             ),
                           ],
                         ),
-                        CustomInkWell(
-                              onTap: () => replaceWindow(context, NotificationsScreen()),
-                              child: Container(
-                                height: 35.0,
-                                width: 35.0,
-                                alignment: Alignment.center,
-                                child: Icon(Iconsax.notification5, size: 20.0, color: Theme.of(context).hintColor.withOpacity(0.5)),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ),
+                        NotificationButton(),
                       ],
                     )
                   ]),
                   bottom: PreferredSize(
                     preferredSize: Size.fromHeight(220.0),
-                    child: Column(
-                      children: [
+                    child: Column(children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Container(
@@ -269,9 +254,9 @@ class MainScreen extends StatelessWidget {
                                   state.totalBalance == "*,**"
                                       ? Text(state.totalBalance,
                                           style: TextStyle(
-                                            fontSize: 36.0,
-                                            color: Theme.of(context).cardColor
-                                          ))
+                                              fontSize: 36.0,
+                                              color:
+                                                  Theme.of(context).cardColor))
                                       : Countup(
                                           precision: 2,
                                           prefix: "\$",
@@ -279,11 +264,12 @@ class MainScreen extends StatelessWidget {
                                               (state.totalBalance / 100 * 20),
                                           end: state.totalBalance,
                                           separator: ",",
-                                          duration: Duration(milliseconds: 1500),
+                                          duration:
+                                              Duration(milliseconds: 1500),
                                           style: TextStyle(
-                                            fontSize: 36.0,
-                                            color: Theme.of(context).cardColor
-                                          ),
+                                              fontSize: 36.0,
+                                              color:
+                                                  Theme.of(context).cardColor),
                                         ),
                                 ],
                               ),
@@ -317,21 +303,21 @@ class MainScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           MainMenu(
-                                icon: Iconsax.arrow_down,
-                                onTap: () => receiveBottomSheet(context),
-                                text: "Receive",
-                              ),
-                            MainMenu(
-                              icon: Iconsax.arrow_up_3,
-                              onTap: () => replaceWindow(
-                                  context, ChooseTokensScreen(tokens: state.tokens)),
-                              text: "Send",
-                            ),
-                            MainMenu(
-                              icon: Iconsax.card,
-                              onTap: () => tradingMethods(context),
-                              text: "Buy",
-                            ),
+                            icon: Iconsax.arrow_down,
+                            onTap: () => receiveBottomSheet(context),
+                            text: "Receive",
+                          ),
+                          MainMenu(
+                            icon: Iconsax.arrow_up_3,
+                            onTap: () => replaceWindow(context,
+                                ChooseTokensScreen(tokens: state.tokens)),
+                            text: "Send",
+                          ),
+                          MainMenu(
+                            icon: Iconsax.card,
+                            onTap: () => tradingMethods(context),
+                            text: "Buy",
+                          ),
                         ],
                       ),
                     ]),
@@ -356,116 +342,95 @@ class MainScreen extends StatelessWidget {
                       Container(
                         alignment: Alignment.centerLeft,
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child:
-                            Text('tokensText'.tr, style: TextStyle(fontSize: 16.0, color: Theme.of(context).cardColor)),
+                        child: Text('tokensText'.tr,
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                color: Theme.of(context).cardColor)),
                       ),
                       SizedBox(height: 8.0),
-                      state.tokens.isEmpty 
-                      ? Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 8.0),
-                                Image.asset("assets/images/cryptos.png", height: 70.0, width: 70.0),
-                                SizedBox(height: 16.0),
-                                Text("yourTokensWillAppearHereText".tr, style: TextStyle(color: Theme.of(context).hintColor)),
-                                SizedBox(height: 16.0),
-                                CustomInkWell(
-                                  onTap: () => tradingMethods(context),
-                                  child: Text("buyCryptoText".tr, style: TextStyle(color: Colors.amber))),
-                              SizedBox(height: 16.0),
-                              Mdivider(),
-                              Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text('tutorialText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor))),
-                          ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Container(
-                                height: 120.0,
-                                child: ListView.builder(
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: state.tutorial!.length,
-                                  itemBuilder: (context, index) {
-                                    return AcademyWidget(article: state.tutorial![index], onTap: () => replaceWindow(context, ReadArticleScreen(article: state.tutorial![index],)));
-                                  },
-                                ),
+                      state.tokens.isEmpty
+                          ? Expanded(
+                              child: ListView(
+                                physics: BouncingScrollPhysics(),
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(height: 8.0),
+                                          Image.asset(
+                                              "assets/images/cryptos.png",
+                                              height: 70.0,
+                                              width: 70.0),
+                                          SizedBox(height: 16.0),
+                                          Text(
+                                              "yourTokensWillAppearHereText".tr,
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .hintColor)),
+                                          SizedBox(height: 16.0),
+                                          CustomInkWell(
+                                              onTap: () =>
+                                                  tradingMethods(context),
+                                              child: Text("buyCryptoText".tr,
+                                                  style: TextStyle(
+                                                      color: Colors.amber))),
+                                          SizedBox(height: 16.0),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                itemCount: state.tokens.length,
+                                itemBuilder: (context, index) {
+                                  return TokenListTile(
+                                      backgroundColor: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      onPressed: () => replaceWindow(
+                                          context,
+                                          BlocProvider<HistoryCubit>(
+                                              create: (context) => HistoryCubit(
+                                                  state: state
+                                                      .tokens[index].address),
+                                              child: HistoryTransactionsScreen(
+                                                  mint: state
+                                                      .tokens[index].address!,
+                                                  balance: state
+                                                      .tokens[index].usdBalance,
+                                                  amount: state.tokens[index]
+                                                      .balance!))),
+                                      image: state.tokens[index].image,
+                                      title: state.tokens[index].symbol ??
+                                          "unknown",
+                                      trailingTitle: state.hideBalanceState
+                                          ? '*'
+                                          : '${state.tokens[index].balance}',
+                                      trailingSubtitle: state.hideBalanceState
+                                          ? '-'
+                                          : '\$${state.tokens[index].usdBalance}');
+                                },
                               ),
                             ),
-                              ],
-                            ),
-                          ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Container(
-                                height: 50.0,
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                decoration: BoxDecoration(
-                                  //border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                                  gradient: LinearGradient(colors: [Theme.of(context).colorScheme.onPrimary.withOpacity(0.5), Theme.of(context).primaryColor.withOpacity(0.5),]),
-                                  borderRadius: BorderRadius.circular(50.0)
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("inviteFriendText".tr, style: TextStyle(color: Theme.of(context).cardColor, fontSize: 12.0)),
-                                    SvgPicture.asset("assets/icons/users.svg", height: 25.0, width: 25.0),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ) 
-                      : Expanded(
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: state.tokens.length,
-                          itemBuilder: (context, index) {
-                        return TokenListTile(
-                            backgroundColor:
-                                Theme.of(context).scaffoldBackgroundColor,
-                            onPressed: () => replaceWindow(
-                                context,
-                                BlocProvider<HistoryCubit>(
-                                    create: (context) => HistoryCubit(
-                                        state: state.tokens[index].address),
-                                    child: HistoryTransactionsScreen(
-                                        mint: state.tokens[index].address!,
-                                        balance: state.tokens[index].usdBalance,
-                                        amount: state.tokens[index].balance!))),
-                            image: state.tokens[index].image,
-                            title: state.tokens[index].symbol ?? "unknown",
-                            trailingTitle: state.hideBalanceState
-                                ? '*'
-                                : '${state.tokens[index].balance}',
-                            trailingSubtitle: state.hideBalanceState
-                                ? '-'
-                                : '\$${state.tokens[index].usdBalance}');
-                          },
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ),
             ),
-                  ),
-          );
-        }
-        return Container();
+          ),
+        );
       }
-    );
+      return Container();
+    });
   }
 
   tradingMethods(BuildContext context) {
@@ -506,17 +471,24 @@ class MainScreen extends StatelessWidget {
                             context,
                             WebviewScreen(
                                 urlLink:
-                                    "https://buy.onramper.com/?wallets=SOL:${wallet.address}&API_KEY=pk_prod_puiFMHyFkJpStdWO1jV2HtmhMk37Esi4oeBmB0BxNAY0&defaultCrypto=SOL")),
+                                    "https://buy.onramper.com/?wallets=SOL:${wallet.address}&API_KEY=pk_prod_puiFMHyFkJpStdWO1jV2HtmhMk37Esi4oeBmB0BxNAY0&defaultCrypto=SOL&themeName=${context.isDarkMode ? "dark" : "ligth"}&borderRadius=0.5&wgBorderRadius=2")),
                         title: Text("OnRamper"),
-                        subtitle:
-                            Text("Aggregator of cryptocurrency payment services", style: TextStyle(fontSize: 11.0)),
+                        subtitle: Text(
+                            "Aggregator of cryptocurrency payment services",
+                            style: TextStyle(fontSize: 11.0)),
                         leading: Image.asset("assets/images/onramper.png",
                             height: 40.0, width: 40.0),
                       ),
                       Mdivider(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text("If this method does not suit you, buy cryptocurrency on the exchange Binance, OKEX, Kucoin etc. We are already working on adding other payment methods.", style: TextStyle(fontSize: 9.0, color: Theme.of(context).hintColor.withOpacity(0.5))),
+                        child: Text(
+                            "If this method does not suit you, buy cryptocurrency on the exchange Binance, OKEX, Kucoin etc. We are already working on adding other payment methods.",
+                            style: TextStyle(
+                                fontSize: 9.0,
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.5))),
                       )
                     ],
                   ),
@@ -529,82 +501,78 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-
   receiveBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    barrierColor: Colors.black.withOpacity(0.5),
-    backgroundColor: Colors.transparent,
-    context: context,
-    builder: (builder) {
-      return Material(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0))),
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 10.0,
-                width: 60.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Theme.of(context).primaryColor
+    showModalBottomSheet(
+      barrierColor: Colors.black.withOpacity(0.5),
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (builder) {
+        return Material(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0))),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 10.0,
+                  width: 60.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.0),
+                      color: Theme.of(context).primaryColor),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Text("Solana network", style: TextStyle(fontSize: 16.0)),
-              SizedBox(height: 16.0),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: QrImage(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    data: wallet.address,
-                    version: QrVersions.auto,
-                    eyeStyle: QrEyeStyle(eyeShape: QrEyeShape.circle),
-                    dataModuleStyle: QrDataModuleStyle(
-                        dataModuleShape: QrDataModuleShape.circle),
-                    size: 220.0),
-              ),
-              SizedBox(height: 32.0),
-              InkWell(
-                  onTap: () {
-                    if (wallet.address.isNotEmpty) {
-                      Clipboard.setData(ClipboardData(text: wallet.address))
-                          .then((result) {
-                        okCopyToast(context);
-                      });
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Container(
-                        height: 50.0,
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color:
-                                Theme.of(context).hintColor.withOpacity(0.1)),
-                        child: Text("${wallet.address} ❐",
-                            style: TextStyle(fontSize: 12))),
-                  )),
-              SizedBox(height: 16.0),
-            ],
+                SizedBox(height: 16.0),
+                Text("Solana network", style: TextStyle(fontSize: 16.0)),
+                SizedBox(height: 16.0),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: QrImage(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      data: wallet.address,
+                      version: QrVersions.auto,
+                      eyeStyle: QrEyeStyle(eyeShape: QrEyeShape.circle),
+                      dataModuleStyle: QrDataModuleStyle(
+                          dataModuleShape: QrDataModuleShape.circle),
+                      size: 220.0),
+                ),
+                SizedBox(height: 32.0),
+                InkWell(
+                    onTap: () {
+                      if (wallet.address.isNotEmpty) {
+                        Clipboard.setData(ClipboardData(text: wallet.address))
+                            .then((result) {
+                          okCopyToast(context);
+                        });
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                          height: 50.0,
+                          alignment: Alignment.center,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(0.1)),
+                          child: Text("${wallet.address} ❐",
+                              style: TextStyle(fontSize: 12))),
+                    )),
+                SizedBox(height: 16.0),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
-}
-
-

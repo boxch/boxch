@@ -4,7 +4,6 @@ import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:solana/solana.dart';
 import 'package:bip39/bip39.dart' as bip39;
 
@@ -14,10 +13,7 @@ class StartCubit extends Cubit<StartStates> {
   StartCubit({state})
       : super((Hive.box(walletBox).isNotEmpty)
             ? AuthScreenStartState()
-            : FirstScreenStartState()) {
-              OneSignal.shared.setLogLevel(OSLogLevel.debug, OSLogLevel.none);
-              OneSignal.shared.setAppId("5dbd484f-15f8-4a9f-9b72-fc4bbab1fb3f");
-            }
+            : FirstScreenStartState());
 
   Future<void> replaceCreateWallet() async {
     final String mnemonic = bip39.generateMnemonic();

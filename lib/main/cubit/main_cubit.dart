@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
 import 'package:boxch/models/token.dart';
-import 'package:boxch/services/notchain_api.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/walletconnect/utils/wconnect_functions.dart';
@@ -60,20 +58,7 @@ class MainCubit extends Cubit<MainStates> {
       totalBalance += usd;
     });
 
-
     if (state is MainScreenState || state is LoadingMainScreenState) {
-      emit(MainScreenState(
-          tutorial: balance.isEmpty ? await NotChainApi.getTutorial() : null,
-          tokens: balance,
-          totalBalance: hideBalanceState ? "*,**" : totalBalance,
-          hideBalanceState: hideBalanceState));
-    }
-  }
-
-  Future<void> replaceMainScreen() async {
-    if (allTokens.isEmpty) {
-      emit(LoadingMainScreenState());
-    } else {
       emit(MainScreenState(
           tokens: balance,
           totalBalance: hideBalanceState ? "*,**" : totalBalance,
@@ -175,11 +160,11 @@ class MainCubit extends Cubit<MainStates> {
         totalBalance: hideBalanceState ? "*,**" : totalBalance,
         hideBalanceState: hideBalanceState));
   }
-  
 
   Future<void> walletConnect(BuildContext context) async {
     wcClient = await Web3Wallet.createInstance(
         projectId: projectId, metadata: metadata);
+
     wcClient.onSessionProposal.subscribe((SessionProposalEvent? args) async {
       var userConnect = await connectDappDialog(context, args: args!);
       if (userConnect) {
@@ -190,16 +175,15 @@ class MainCubit extends Cubit<MainStates> {
             chainId: "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
             method: "solana_signTransaction",
             handler: (String topic, dynamic parametrs) async {
-              var userApproved = await signTransactionDialog(context, par: parametrs);
+              var userApproved = await signTransactionDialog(context,
+                  title: "Sign transaction", par: parametrs);
               if (userApproved) {
                 // Returned value must by a primitive, or a JSON serializable object: Map, List, etc.
-               
-                var trx = web3.Transaction.fromJson(parametrs);
-                var signature = await wallet.sign(trx.serialize());
 
+                var message = web3.Message.fromJson(parametrs['_message']);
+                var signature = await wallet.sign(message.serialize());
 
-                return json.encode({"signature": signature.toBase58()});
-
+                return {"signature": signature.toBase58()};
               } else {
                 throw Errors.getSdkError(Errors.USER_REJECTED_SIGN);
               }
@@ -209,10 +193,10 @@ class MainCubit extends Cubit<MainStates> {
           chainId: "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
           method: "solana_signMessage",
           handler: (String topic, dynamic parametrs) async {
-            var userApproved = await signTransactionDialog(context, par: parametrs);
+            var userApproved = await signTransactionDialog(context,
+                title: "Sign message", par: parametrs);
             if (userApproved) {
               print(parametrs);
-              
             } else {
               throw Errors.getSdkError(Errors.USER_REJECTED_SIGN);
             }
@@ -221,6 +205,4 @@ class MainCubit extends Cubit<MainStates> {
       }
     });
   }
-
-  
 }

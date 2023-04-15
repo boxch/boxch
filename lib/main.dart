@@ -3,7 +3,6 @@ import 'package:boxch/landing.dart';
 import 'package:boxch/models/wallet.dart';
 import 'package:boxch/start/cubit/start_cubit.dart';
 import 'package:boxch/utils/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:solana/solana.dart';
@@ -18,20 +17,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:get/get.dart';
 
-var app;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isIOS) {
-   app = await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyCKHw9b6VNf6hmtJnbnp43Ivqehc-rqZYY",
-            appId: "1:323388584315:ios:8f7f7b211066398e95cdde",
-            messagingSenderId: "323388584315",
-            projectId: "boxch-31c17"));
-  } else {
-   app = await Firebase.initializeApp();
-  }
+  
 
   var path = Directory.systemTemp.path;
   Hive.registerAdapter(LocalWalletAdapter());

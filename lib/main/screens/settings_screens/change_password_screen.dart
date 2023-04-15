@@ -31,8 +31,6 @@ class ChangePasswordScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
                             controller: _controllerOldPassword,
-                            keyboardType: TextInputType.number,
-                            maxLength: 6,
                             decoration: InputDecoration(
                                 hintText: 'Enter old password',
                                 filled: true,
@@ -47,8 +45,6 @@ class ChangePasswordScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: TextField(
                             controller: _controllerNewPassword,
-                            keyboardType: TextInputType.number,
-                            maxLength: 6,
                             decoration: InputDecoration(
                                 hintText: 'Enter new password',
                                 filled: true,

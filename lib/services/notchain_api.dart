@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:boxch/models/articles.dart';
 import 'package:http/http.dart' as http;
 
 class NotChainApi {
@@ -32,21 +31,4 @@ class NotChainApi {
      });
     return list;
   }
-
-  static Future<List<Article>> getTutorial() async {
-      final Uri uri = Uri.parse("https://boxch-academy-default-rtdb.europe-west1.firebasedatabase.app/articles.json");
-      var response = await http.get(uri);
-      List jsonDecode = json.decode(response.body);
-      List<Article> tutorialArticles = [];
-
-      var list = jsonDecode.map((json) => Article.fromJson(json)).toList();
-
-      list.forEach((element) { 
-        if (element.tag == "begginer") {
-          tutorialArticles.add(element);
-        }
-      });
-
-      return tutorialArticles;
-    }
 }
