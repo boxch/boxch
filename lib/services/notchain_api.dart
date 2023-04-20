@@ -19,16 +19,4 @@ class NotChainApi {
       }
     }
   }
-
-
-  static Future getSignatureInfo({required String txHash}) async {
-    var url = Uri.parse("https://public-api.solscan.io/transaction/$txHash");
-    var response = await http.get(url);
-    Map decodeJson = json.decode(response.body);
-    List list = [];
-    decodeJson.forEach((key, value) { 
-      
-     });
-    return list;
-  }
 }

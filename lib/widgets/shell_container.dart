@@ -7,13 +7,8 @@ class ShellContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-                height: 42.0,
-                width: 42.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor
-                ),
-                alignment: Alignment.center,
-                child: child);
+      width: 32.0,
+      alignment: Alignment.center,
+      child: child);
   }
 }

@@ -13,6 +13,7 @@ import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
 import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
+import 'package:boxch/widgets/circle_info_widget.dart';
 import 'package:boxch/widgets/custom_switch.dart';
 import 'package:boxch/widgets/mdivider.dart';
 import 'package:boxch/widgets/shell_container.dart';
@@ -44,9 +45,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('exitText'.tr),
+                Text('exitText'.tr, style: TextStyle(color: Theme.of(context).cardColor)),
                 Divider(),
-                Text('confirmExitText'.tr, style: TextStyle(fontSize: 14.0)),
+                Text('confirmExitText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               ],
             ),
             actions: [
@@ -58,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   await box.deleteFromDisk();
                   SystemNavigator.pop();
                 },
-                child: Text('yesText'.tr),
+                child: Text('yesText'.tr, style: TextStyle(color: Theme.of(context).cardColor)),
               ),
               TextButton(
                 onPressed: () {
@@ -66,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 child: Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text('noText'.tr),
+                  child: Text('noText'.tr, style: TextStyle(color: Theme.of(context).cardColor)),
                 ),
               ),
             ],
@@ -103,7 +104,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            SizedBox(height: 32.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  CircleInfoWidget(viewed: false),
+                ],
+              ),
+            ),
+            SizedBox(height: 16.0),
             ListTile(
               onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
                         create: (context) => WalletConnectCubit(context),

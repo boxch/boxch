@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:boxch/services/notchain_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:boxch/models/token.dart';
-import 'package:boxch/services/repository.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:solana/dto.dart';
@@ -58,7 +58,7 @@ class SolanaNetwork {
 
      for (var bal in _balance) {
        if (bal.symbol != null) {
-         bal.price = await NoChainApiRepository().getPrice(symbol: bal.symbol!);
+         bal.price = await NotChainApi.getTokenPrice(symbol: bal.symbol!);
        }
      }
 

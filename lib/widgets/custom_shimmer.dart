@@ -13,8 +13,8 @@ class CustomShimmer extends StatelessWidget {
       child: Shimmer(
           duration: Duration(milliseconds: 500),
           interval: Duration(milliseconds: 500),
-          color: Colors.white,
-          colorOpacity: 0,
+          color: Colors.grey,
+          colorOpacity: 0.1,
           enabled: true,
           direction: ShimmerDirection.fromLTRB(),
           child: child),

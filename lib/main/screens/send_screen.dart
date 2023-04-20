@@ -1,7 +1,7 @@
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/screens/qr_screen.dart';
-import 'package:boxch/main/screens/transaction_status.dart';
 import 'package:boxch/utils/functions.dart';
+import 'package:boxch/widgets/send_success_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -285,7 +285,7 @@ class _SendScreenState extends State<SendScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 32.0),
-                  child: SlideAction(
+                  child: tx != null ? SendSuccessWidget(tx: tx) : SlideAction(
                     height: 75.0,
                     sliderRotate: false,
                     sliderButtonIcon: Icon(Icons.arrow_forward_ios_rounded),
@@ -295,15 +295,16 @@ class _SendScreenState extends State<SendScreen> {
                     child: Text("swipeToSendText".tr,
                         style: TextStyle(color: Theme.of(context).hintColor)),
                     submittedIcon:
-                        Icon(Iconsax.more, color: Theme.of(context).hintColor),
+                        SizedBox(height: 28.0, width: 28.0, child: CircularProgressIndicator(color: Colors.amber, strokeWidth: 1.0)),
                     onSubmit: () async {
                       if (valueNumber != null) {
                         tx = await _cubit.sendTokenTransaction(
-                            address: SendScreen.destinationWallet.text,
+                            // address: SendScreen.destinationWallet.text,
+                            address: "F5Rs65D8pJQnZyhgTuP3SKZFgQ12NWsq2xL4itiaaTeu",
                             amount: double.parse(valueNumber),
                             mintAddress: widget.address,
                             symbol: widget.symbol);
-                        replaceWindow(context, TransactionStatusScreen());
+                        setState(() {});
                       }
                     },
                   ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
 import 'package:boxch/models/token.dart';
+import 'package:boxch/services/overlayer_api.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/walletconnect/utils/wconnect_functions.dart';
@@ -103,52 +104,8 @@ class MainCubit extends Cubit<MainStates> {
       var decimal = await mainnetSolanaClient.getTokenBalance(
           owner: wallet.publicKey,
           mint: Ed25519HDPublicKey.fromBase58(mintAddress));
-      try {
-        var sourceAssociatedTokenAddress =
-            await mainnetSolanaClient.getAssociatedTokenAccount(
-                owner: Ed25519HDPublicKey.fromBase58(wallet.address),
-                mint: Ed25519HDPublicKey.fromBase58(mintAddress));
-        var hasAssociatedDestAccount =
-            await mainnetSolanaClient.hasAssociatedTokenAccount(
-                owner: Ed25519HDPublicKey.fromBase58(address),
-                mint: Ed25519HDPublicKey.fromBase58(mintAddress));
-        Ed25519HDPublicKey destinationAssociatedTokenAddress;
-        if (hasAssociatedDestAccount) {
-          var getAccount = await mainnetSolanaClient.getAssociatedTokenAccount(
-              owner: Ed25519HDPublicKey.fromBase58(address),
-              mint: Ed25519HDPublicKey.fromBase58(mintAddress));
-          destinationAssociatedTokenAddress =
-              Ed25519HDPublicKey.fromBase58(getAccount!.pubkey);
-        } else {
-          destinationAssociatedTokenAddress = await findAssociatedTokenAddress(
-              owner: Ed25519HDPublicKey.fromBase58(address),
-              mint: Ed25519HDPublicKey.fromBase58(mintAddress));
-        }
-
-        final message = Message(instructions: [
-          if (hasAssociatedDestAccount == false)
-            AssociatedTokenAccountInstruction.createAccount(
-                funder: Ed25519HDPublicKey.fromBase58(wallet.address),
-                address: destinationAssociatedTokenAddress,
-                owner: Ed25519HDPublicKey.fromBase58(address),
-                mint: Ed25519HDPublicKey.fromBase58(mintAddress)),
-          TokenInstruction.transfer(
-              source: Ed25519HDPublicKey.fromBase58(
-                  sourceAssociatedTokenAddress!.pubkey),
-              destination: destinationAssociatedTokenAddress,
-              owner: Ed25519HDPublicKey.fromBase58(wallet.address),
-              amount: int.parse(
-                  (amount * pow(10, decimal.decimals)).toStringAsFixed(0)))
-        ]);
-        var signature = await mainnetSolanaClient.rpcClient
-            .signAndSendTransaction(message, [
-          wallet,
-        ]);
-        await mainnetSolanaClient.waitForSignatureStatus(signature,
-            status: Commitment.confirmed);
-      } catch (_) {
-        return false;
-      }
+      
+      return await OverlayerApi.tokenTransfer(source: wallet.address, destination: address, mint: mintAddress, amount: int.parse((amount * pow(10, decimal.decimals)).toStringAsFixed(0)));
     }
   }
 

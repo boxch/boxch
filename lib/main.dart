@@ -20,7 +20,6 @@ import 'package:get/get.dart';
 
 void main() async {
   
-
   var path = Directory.systemTemp.path;
   Hive.registerAdapter(LocalWalletAdapter());
   Hive..init(path);

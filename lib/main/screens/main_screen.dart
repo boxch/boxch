@@ -1,7 +1,6 @@
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
-import 'package:boxch/main/screens/history_transactions_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
 import 'package:boxch/utils/config.dart';
@@ -11,7 +10,6 @@ import 'package:boxch/widgets/main_item.dart';
 import 'package:boxch/widgets/mdivider.dart';
 import 'package:boxch/widgets/notification_button.dart';
 import 'package:flutter/material.dart';
-import 'package:boxch/history/history_cubit.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/functions.dart';
 import 'package:boxch/utils/show_toasts.dart';
@@ -85,35 +83,33 @@ class MainScreen extends StatelessWidget {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomShimmer(
-                            child: Container(
-                              height: 20.0,
-                              width: 90.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomShimmer(
+                                    child: Text(
+                                      'totalBalanceText'.tr,
+                                      style: TextStyle(
+                                          fontSize: 11.0,
+                                          color: Theme.of(context).hintColor.withOpacity(0.05)),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4.0),
+                                  CustomShimmer(
+                                    child: Text(
+                                            "\$0.00",
+                                            style: TextStyle(
+                                                fontSize: 36.0,
+                                                color:
+                                                    Theme.of(context).cardColor.withOpacity(0.05)),
+                                          ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          CustomShimmer(
-                            radius: 5.0,
-                            child: Container(
-                              height: 45.0,
-                              width: 120.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       Container(
                         height: 70.0,
                         width: 50.0,
@@ -157,19 +153,6 @@ class MainScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 32.0),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 20.0,
-                        width: 50.0,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
-                  ),
-                )
               ],
             ));
       }
@@ -396,19 +379,20 @@ class MainScreen extends StatelessWidget {
                                   return TokenListTile(
                                       backgroundColor: Theme.of(context)
                                           .scaffoldBackgroundColor,
-                                      onPressed: () => replaceWindow(
-                                          context,
-                                          BlocProvider<HistoryCubit>(
-                                              create: (context) => HistoryCubit(
-                                                  state: state
-                                                      .tokens[index].address),
-                                              child: HistoryTransactionsScreen(
-                                                  mint: state
-                                                      .tokens[index].address!,
-                                                  balance: state
-                                                      .tokens[index].usdBalance,
-                                                  amount: state.tokens[index]
-                                                      .balance!))),
+                                      onPressed: () {},
+                                      // replaceWindow(
+                                      //     context,
+                                      //     BlocProvider<HistoryCubit>(
+                                      //         create: (context) => HistoryCubit(
+                                      //             state: state
+                                      //                 .tokens[index].address),
+                                      //         child: HistoryTransactionsScreen(
+                                      //             mint: state
+                                      //                 .tokens[index].address!,
+                                      //             balance: state
+                                      //                 .tokens[index].usdBalance,
+                                      //             amount: state.tokens[index]
+                                      //                 .balance!))),
                                       image: state.tokens[index].image,
                                       title: state.tokens[index].symbol ??
                                           "unknown",

@@ -34,7 +34,6 @@
 /android/key.properties
 /android/app/upload-keystore.jks
 /deobfus
-/lib/utils/config.dart
 
 # Web related
 lib/generated_plugin_registrant.dart

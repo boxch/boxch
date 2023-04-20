@@ -26,13 +26,9 @@ If you'd rather build the application yourself, please ensure you have flutter/d
 * Clone the repository
 ```git clone https://github.com/boxch/boxch.git```
 
-* Rename the file
-```lib/utils/config_s.dart to lib/utils/config.dart ```
-
 * Install dependencies
 ```flutter pub get```
 
 * Build
 ```flutter build apk```
 
-```IMPORTANT! The standard Solana RPC API is limited in speed, which can cause problems with launching the application. To fix this, please use private entrepoints```
