@@ -76,7 +76,7 @@ class _ChooseTokensScreenState extends State<ChooseTokensScreen> {
                           context,
                           SendScreen(
                             symbol: duplicateTokens[index].symbol ?? "unknown",
-                              address: duplicateTokens[index].address!, tokenBalance: duplicateTokens[index].balance)),
+                              mint: duplicateTokens[index].address!, tokenBalance: duplicateTokens[index].balance)),
                     image: duplicateTokens[index].image,
                     title: duplicateTokens[index].symbol ?? "unknown",
                   ); 

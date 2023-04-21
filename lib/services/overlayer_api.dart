@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:math';
 import 'package:boxch/utils/config.dart';
 import 'package:solana/encoder.dart';
 import 'package:solana/solana.dart';
@@ -8,8 +8,22 @@ import 'package:solana_web3/solana_web3.dart';
 
 class OverlayerApi {
 
-  static Future tokenTransfer({required String source, required String destination, required String mint, required int amount}) async {
+  static Future feeInfo({required String mint}) async {
+      var getMessage = await http.post(Uri.parse("https://overlayer.herokuapp.com/fee_info"),
+      headers: {"Content-Type": "application/json; charset=utf-8"},
+      body: json.encode({
+        "solana": {
+          "mint": mint,
+        }
+      })
+  );
 
+      final Map<String, dynamic> jsonDecode = json.decode(getMessage.body);
+      var tokenBalance = await mainnetSolanaClient.getTokenBalance(owner: wallet.publicKey, mint: Ed25519HDPublicKey.fromBase58(mint));
+      return jsonDecode.values.first / pow(10, tokenBalance.decimals);
+  }
+
+  static Future tokenTransfer({required String source, required String destination, required String mint, required int amount}) async {
     var sourceAssociated = await mainnetSolanaClient.getAssociatedTokenAccount(owner: wallet.publicKey, mint: Ed25519HDPublicKey.fromBase58(mint));
     var hasAssociatedDestAccount =
             await mainnetSolanaClient.hasAssociatedTokenAccount(
@@ -56,7 +70,6 @@ class OverlayerApi {
       await mainnetSolanaClient.waitForSignatureStatus(tx, status: Commitment.processed);
       print(tx);
       return tx;
-
   }
 
 }

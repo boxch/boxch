@@ -1,6 +1,8 @@
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/screens/qr_screen.dart';
+import 'package:boxch/services/overlayer_api.dart';
 import 'package:boxch/utils/functions.dart';
+import 'package:boxch/widgets/custom_shimmer.dart';
 import 'package:boxch/widgets/send_success_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,10 +15,10 @@ import 'package:slide_to_act/slide_to_act.dart';
 // ignore: must_be_immutable
 class SendScreen extends StatefulWidget {
   final String symbol;
-  final String address;
+  final String mint;
   final tokenBalance;
   SendScreen(
-      {required this.address,
+      {required this.mint,
       required this.symbol,
       required this.tokenBalance});
   static TextEditingController destinationWallet = TextEditingController();
@@ -178,9 +180,32 @@ class _SendScreenState extends State<SendScreen> {
                                       ],
                                     ),
                                   ),
-                                  Text("Fee 0.000005 SOL",
-                                      style: TextStyle(
-                                          color: Theme.of(context).hintColor)),
+                                  FutureBuilder(
+                                    future: OverlayerApi.feeInfo(mint: widget.mint),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return CustomShimmer(
+                                          child: Container(
+                                            height: 40.0,
+                                            width: 120.0,
+                                          ),
+                                        );
+                                      }
+
+                                      if (snapshot.connectionState == ConnectionState.done) {
+                                        return snapshot.data != null ? SizedBox(
+                                          child: Text("Fee: ${snapshot.data} ${widget.symbol}",
+                                            style: TextStyle(
+                                                color: Theme.of(context).hintColor)),
+                                        ) : SizedBox(
+                                          child: Text("Fee: 0.00001 SOL",
+                                            style: TextStyle(
+                                                color: Theme.of(context).hintColor)));
+                                      }
+
+                                      return SizedBox();
+                                    }
+                                  ),
                                 ],
                               ),
                             ),
@@ -299,10 +324,9 @@ class _SendScreenState extends State<SendScreen> {
                     onSubmit: () async {
                       if (valueNumber != null) {
                         tx = await _cubit.sendTokenTransaction(
-                            // address: SendScreen.destinationWallet.text,
-                            address: "F5Rs65D8pJQnZyhgTuP3SKZFgQ12NWsq2xL4itiaaTeu",
+                            address: SendScreen.destinationWallet.text,
                             amount: double.parse(valueNumber),
-                            mintAddress: widget.address,
+                            mintAddress: widget.mint,
                             symbol: widget.symbol);
                         setState(() {});
                       }
