@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:boxch/models/transaction.dart';
 import 'package:boxch/services/notchain_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:boxch/models/token.dart';
@@ -70,6 +71,23 @@ class SolanaNetwork {
     var responseTokens = await http.get(Uri.parse("https://raw.githubusercontent.com/boxch/boxch-tokens/main/bin/tokens.json"));
     final Map<String, dynamic> tokensJsonDecode = json.decode(responseTokens.body);
     return tokensJsonDecode;
+  }
+
+  static Future<List<TransactionHistory>> getTransactionHistory({required String mint}) async {
+    final findAddress = await findAssociatedTokenAddress(owner: wallet.publicKey, mint: Ed25519HDPublicKey.fromBase58(mint));
+    final associatedAddress = mint == SOL ? mint : findAddress.toBase58();
+    final Iterable<TransactionSignatureInformation> transactions = await mainnetSolanaClient.rpcClient.getSignaturesForAddress(associatedAddress);
+    List<TransactionHistory> transactionHistory = [];
+    transactions.toList().asMap().forEach((index, element) { 
+      DateTime data = DateTime.fromMillisecondsSinceEpoch(element.blockTime! * 1000);
+      transactionHistory.add(TransactionHistory(
+        id: index,
+        data: data, 
+        signature: element.signature, 
+        status: element.confirmationStatus!.value));
+    });
+    print(transactionHistory.first.status);
+    return transactionHistory;
   }
 
   

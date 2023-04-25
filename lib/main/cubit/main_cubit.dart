@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/chains/solana.dart';
 import 'package:boxch/models/token.dart';
+import 'package:boxch/models/transaction.dart';
 import 'package:boxch/services/overlayer_api.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/utils/constants.dart';
@@ -161,5 +162,9 @@ class MainCubit extends Cubit<MainStates> {
         );
       }
     });
+  }
+
+  Future<List<TransactionHistory>> getTransactionHistory({required String mint}) async {
+    return SolanaNetwork.getTransactionHistory(mint: mint);
   }
 }

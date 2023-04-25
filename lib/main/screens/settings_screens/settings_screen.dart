@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:boxch/main/screens/settings_screens/change_password_screen.dart';
+import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
 import 'package:boxch/main/screens/settings_screens/info_screen.dart';
 import 'package:boxch/main/screens/settings_screens/language_screen.dart';
 import 'package:boxch/models/wallet.dart';
@@ -12,7 +12,6 @@ import 'package:boxch/theme/theme_states.dart';
 import 'package:boxch/utils/constants.dart';
 import 'package:boxch/utils/links.dart';
 import 'package:boxch/walletconnect/cubit/walletconnect_cubit.dart';
-import 'package:boxch/walletconnect/screens/walletconnect_screen.dart';
 import 'package:boxch/widgets/circle_info_widget.dart';
 import 'package:boxch/widgets/custom_switch.dart';
 import 'package:boxch/widgets/mdivider.dart';
@@ -23,6 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -108,26 +108,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
-                  CircleInfoWidget(viewed: false),
+                  CircleInfoWidget(viewed: false, onTap: () => replaceWindow(context,
+                   BlocProvider<WalletConnectCubit>(
+                    create: (context) => WalletConnectCubit(context),
+                    child: WalletConnectScreen()))),
                 ],
               ),
             ),
             SizedBox(height: 16.0),
-            ListTile(
-              onTap: () => replaceWindow(context, BlocProvider<WalletConnectCubit>(
-                        create: (context) => WalletConnectCubit(context),
-                        child: WalletConnectScreen(),
-                      )),
-              leading: ShellContainer(child: Image.asset("assets/images/wallet_connect.png", height: 28.0, width: 28.0)),
-              title:
-                  Text('WalletConnect', style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
-            ),
             Mdivider(),
             ListTile(
               leading: ShellContainer(child: Icon(Iconsax.key5,
                   color: Theme.of(context).hintColor, size: 21.0)),
               title:
-                  Text('privateKeyText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
+                  Text('mnemonicText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () {
                 var box = Hive.box(walletBox);
                 final LocalWallet current = box.get(boxCurrentWalletKey);
@@ -175,13 +169,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title:
                   Text('likingBoxchText'.tr, style: TextStyle(fontSize: 14.0, color: Theme.of(context).cardColor)),
               onTap: () async {
-                if (Platform.isIOS) {
-                  await launchUrl(Uri.parse(appInAppStore));
-                }
-
-                if (Platform.isAndroid) {
-                  await launchUrl(Uri.parse(appInGooglePlay));
-                }
+                StoreRedirect.redirect(androidAppId: "com.arj.boxch",
+                    iOSAppId: "585027354");
               },
             ),
             SizedBox(height: 8.0),

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:boxch/main/cubit/main_cubit.dart';
 import 'package:boxch/main/cubit/main_states.dart';
 import 'package:boxch/main/screens/choose_tokens_screen.dart';
 import 'package:boxch/main/screens/settings_screens/settings_screen.dart';
+import 'package:boxch/main/screens/transaction_history_screen.dart';
 import 'package:boxch/main/screens/webview_screen.dart';
+import 'package:boxch/models/transaction.dart';
 import 'package:boxch/utils/config.dart';
 import 'package:boxch/widgets/custom_inkwell.dart';
 import 'package:boxch/widgets/custom_shimmer.dart';
@@ -16,6 +20,7 @@ import 'package:boxch/utils/show_toasts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxch/widgets/token_list_tile.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get/get.dart';
@@ -83,33 +88,39 @@ class MainScreen extends StatelessWidget {
             body: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomShimmer(
-                                    child: Text(
-                                      'totalBalanceText'.tr,
-                                      style: TextStyle(
-                                          fontSize: 11.0,
-                                          color: Theme.of(context).hintColor.withOpacity(0.05)),
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.0),
-                                  CustomShimmer(
-                                    child: Text(
-                                            "\$0.00",
-                                            style: TextStyle(
-                                                fontSize: 36.0,
-                                                color:
-                                                    Theme.of(context).cardColor.withOpacity(0.05)),
-                                          ),
-                                  ),
-                                ],
-                              ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomShimmer(
+                            radius: 10.0,
+                            child: Text(
+                              'totalBalanceText'.tr,
+                              style: TextStyle(
+                                  fontSize: 11.0,
+                                  color: Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.05)),
+                            ),
+                          ),
+                          SizedBox(height: 4.0),
+                          CustomShimmer(
+                            radius: 10.0,
+                            child: Text(
+                              "\$0.00",
+                              style: TextStyle(
+                                  fontSize: 36.0,
+                                  color: Theme.of(context)
+                                      .cardColor
+                                      .withOpacity(0.05)),
+                            ),
+                          ),
+                        ],
+                      ),
                       Container(
                         height: 70.0,
                         width: 50.0,
@@ -130,26 +141,35 @@ class MainScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      height: 65.0,
-                      width: 65.0,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          shape: BoxShape.circle),
+                    CustomShimmer(
+                      radius: 100.0,
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            shape: BoxShape.circle),
+                      ),
                     ),
-                    Container(
-                      height: 65.0,
-                      width: 65.0,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          shape: BoxShape.circle),
+                    CustomShimmer(
+                      radius: 100.0,
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            shape: BoxShape.circle),
+                      ),
                     ),
-                    Container(
-                      height: 65.0,
-                      width: 65.0,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          shape: BoxShape.circle),
+                    CustomShimmer(
+                      radius: 100.0,
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            shape: BoxShape.circle),
+                      ),
                     ),
                   ],
                 ),
@@ -345,7 +365,7 @@ class MainScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          SizedBox(height: 8.0),
+                                          SizedBox(height: 16.0),
                                           Image.asset(
                                               "assets/images/cryptos.png",
                                               height: 70.0,
@@ -379,20 +399,7 @@ class MainScreen extends StatelessWidget {
                                   return TokenListTile(
                                       backgroundColor: Theme.of(context)
                                           .scaffoldBackgroundColor,
-                                      onPressed: () {},
-                                      // replaceWindow(
-                                      //     context,
-                                      //     BlocProvider<HistoryCubit>(
-                                      //         create: (context) => HistoryCubit(
-                                      //             state: state
-                                      //                 .tokens[index].address),
-                                      //         child: HistoryTransactionsScreen(
-                                      //             mint: state
-                                      //                 .tokens[index].address!,
-                                      //             balance: state
-                                      //                 .tokens[index].usdBalance,
-                                      //             amount: state.tokens[index]
-                                      //                 .balance!))),
+                                      onPressed: () => replaceWindow(context, TransactionHistoryScreen(mainCubit: cubit, mint: state.tokens[index].address!)),
                                       image: state.tokens[index].image,
                                       title: state.tokens[index].symbol ??
                                           "unknown",
@@ -404,7 +411,11 @@ class MainScreen extends StatelessWidget {
                                           : '\$${state.tokens[index].usdBalance}');
                                 },
                               ),
-                            ),
+                            ),    
+                      Divider(),
+                      Container(
+                        height: Platform.isIOS ? 65.0 : 50.0,
+                      )
                     ],
                   ),
                 ),
@@ -413,6 +424,7 @@ class MainScreen extends StatelessWidget {
           ),
         );
       }
+
       return Container();
     });
   }
@@ -513,7 +525,24 @@ class MainScreen extends StatelessWidget {
                       color: Theme.of(context).primaryColor),
                 ),
                 SizedBox(height: 16.0),
-                Text("Solana network", style: TextStyle(fontSize: 16.0)),
+                Container(
+                  height: 45.0,
+                  width: 140.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Theme.of(context).primaryColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset("assets/icons/solana.svg",
+                          height: 25.0, width: 25.0),
+                      SizedBox(width: 8.0),
+                      Text("Solana", style: TextStyle(color: Theme.of(context).cardColor)),
+                      SizedBox(width: 8.0),
+                      Icon(Icons.arrow_drop_down_rounded, color: Theme.of(context).hintColor)
+                    ],
+                  ),
+                ),
                 SizedBox(height: 16.0),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
@@ -547,7 +576,7 @@ class MainScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               color:
-                                  Theme.of(context).hintColor.withOpacity(0.1)),
+                                  Theme.of(context).primaryColor),
                           child: Text("${wallet.address} ❐",
                               style: TextStyle(fontSize: 12))),
                     )),

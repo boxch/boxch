@@ -71,6 +71,8 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - store_redirect (0.0.1):
+    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
@@ -83,6 +85,7 @@ DEPENDENCIES:
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
+  - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
@@ -116,6 +119,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
+  store_redirect:
+    :path: ".symlinks/plugins/store_redirect/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
@@ -142,6 +147,7 @@ SPEC CHECKSUMS:
   Protobuf: d03938d5f7e974a97964fb0567771e36fbe9ecce
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 

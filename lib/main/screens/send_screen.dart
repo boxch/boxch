@@ -31,6 +31,9 @@ class _SendScreenState extends State<SendScreen> {
   var valueNumber;
   var tx;
 
+  bool feeRequest = false;
+  var fee;
+
   Widget? setStateSubmit({required tx}) {
     if (tx != null && tx != false) {
       return Icon(Icons.check_circle_outline_rounded);
@@ -181,8 +184,11 @@ class _SendScreenState extends State<SendScreen> {
                                     ),
                                   ),
                                   FutureBuilder(
-                                    future: OverlayerApi.feeInfo(mint: widget.mint),
+                                    future: feeRequest ? null : OverlayerApi.feeInfo(mint: widget.mint),
                                     builder: (context, snapshot) {
+                                      feeRequest = true;
+                                      fee = snapshot.data;
+
                                       if (snapshot.connectionState == ConnectionState.waiting) {
                                         return CustomShimmer(
                                           child: Container(
@@ -203,7 +209,10 @@ class _SendScreenState extends State<SendScreen> {
                                                 color: Theme.of(context).hintColor)));
                                       }
 
-                                      return SizedBox();
+                                      return SizedBox(
+                                          child: Text("Fee: $fee ${widget.symbol}",
+                                            style: TextStyle(
+                                                color: Theme.of(context).hintColor)));
                                     }
                                   ),
                                 ],
